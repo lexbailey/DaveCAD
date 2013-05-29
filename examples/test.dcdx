@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DaveCADDrawing file-version="0.1">
+  <sheet>
+    <properties>
+      <property name="sheet-name">sheet1</property>
+      <property name="media">post-it</property>
+      <property name="author">user</property>
+      <property name="date">00-00-00</property>
+    </properties>
+  </sheet>
+  <objects/>
+</DaveCADDrawing>

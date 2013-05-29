@@ -1,0 +1,17 @@
+<!ELEMENT DaveCADDrawing (sheet+)>
+<!ELEMENT sheet (properties, objects)>
+<!ELEMENT properties (property*)>
+<!ELEMENT objects (object*)>
+
+<!ELEMENT property #CDATA>
+<!ELEMENT object #CDATA>
+
+<!ATTLIST DaveCADDrawing file-version CDATA #REQUIRED>
+<!ATTLIST property name (media|sheet-name|author|date) #REQUIRED>
+
+<!ATTLIST object tool (ball-point|felt-tip|pencil) #REQUIRED>
+<!ATTLIST object colour (red|black|green|blue) #REQUIRED>
+<!ATTLIST object top CDATA #REQUIRED>
+<!ATTLIST object left CDATA #REQUIRED>
+<!ATTLIST object top1 CDATA #IMPLIED>
+<!ATTLIST object left1 CDATA #IMPLIED>
