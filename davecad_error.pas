@@ -117,17 +117,20 @@ implementation
 
   procedure showError(errorNum: integer);
   begin
-    Dialogs.MessageDlg('DaveCAD Error', getErrorMessage(errorNum), mtError,[mbOK], 0);
+    if errorNum >0 then
+      Dialogs.MessageDlg('DaveCAD Error', getErrorMessage(errorNum), mtError,[mbOK], 0);
   end;
 
   procedure showWarning(errorNum: integer);
   begin
-    Dialogs.MessageDlg('DaveCAD Error', getErrorMessage(errorNum), mtWarning,[mbOK], 0);
+    if errorNum >0 then
+      Dialogs.MessageDlg('DaveCAD Error', getErrorMessage(errorNum), mtWarning,[mbOK], 0);
   end;
 
   function askQuestion(errorNum: integer): TModalResult;
   begin
-    result := MessageDlg('DaveCAD Error', getErrorMessage(errorNum), mtConfirmation, [mbYes, mbNo, mbCancel], 0);
+    if errorNum >0 then
+      result := MessageDlg('DaveCAD Error', getErrorMessage(errorNum), mtConfirmation, [mbYes, mbNo, mbCancel], 0);
   end;
 
 end.
