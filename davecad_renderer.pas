@@ -11,7 +11,7 @@ procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: in
 
 const
   RENDER_MEDIA_POST_IT = 'post-it';
-  RENDER_MEDIA_NOTEBOOK_A4 = 'notebook-A4';
+  RENDER_MEDIA_NOTEBOOK_A4 = 'notepad-A4';
 
   RENDER_TOOL_BALL_POINT = 'ball-point';
   RENDER_TOOL_FELT_TIP = 'felt-tip';
@@ -37,9 +37,9 @@ begin
   canvas.FillRect(0,0,cWidth, cHeight);
 
   //draw the background for the sheet we are viewing
-  if sheet.Media = RENDER_MEDIA_POST_IT then begin
+  if (sheet.Media = RENDER_MEDIA_POST_IT) or (sheet.Media = RENDER_MEDIA_NOTEBOOK_A4) then begin
      picture := TPicture.Create;
-     picture.LoadFromLazarusResource('post-it');
+     picture.LoadFromLazarusResource(sheet.Media);
      canvas.Draw(centreX-round(picture.Width/2),centreY-round(picture.Height/2),picture.Bitmap);
   end;
 end;
@@ -47,6 +47,7 @@ end;
 initialization
 
   {$I post-it.lrs}
+  {$I notepad-A4.lrs}
 
 end.
 

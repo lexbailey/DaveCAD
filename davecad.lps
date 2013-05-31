@@ -25,8 +25,8 @@
         <UnitName Value="davecad_main"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="299"/>
-        <CursorPos X="14" Y="325"/>
+        <TopLine Value="78"/>
+        <CursorPos X="15" Y="102"/>
         <UsageCount Value="233"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -35,11 +35,10 @@
         <Filename Value="davecad_file.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="davecad_file"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="222"/>
-        <CursorPos X="4" Y="225"/>
+        <TopLine Value="283"/>
+        <CursorPos X="44" Y="293"/>
         <UsageCount Value="233"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -59,7 +58,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="921"/>
         <CursorPos X="3" Y="945"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit4>
       <Unit5>
         <Filename Value="C:\lazarus\components\lazutils\laz2_xmlread.pas"/>
@@ -68,7 +67,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="3364"/>
         <CursorPos X="27" Y="3370"/>
-        <UsageCount Value="50"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -86,7 +85,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1722"/>
         <CursorPos X="1" Y="1746"/>
-        <UsageCount Value="67"/>
+        <UsageCount Value="68"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
@@ -97,7 +96,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="54"/>
         <CursorPos X="3" Y="64"/>
-        <UsageCount Value="162"/>
+        <UsageCount Value="164"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
@@ -111,11 +110,12 @@
         <Filename Value="davecad_renderer.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="davecad_renderer"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="47" Y="35"/>
-        <UsageCount Value="135"/>
+        <TopLine Value="4"/>
+        <CursorPos X="23" Y="50"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
       </Unit10>
       <Unit11>
@@ -123,7 +123,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="30" Y="1"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit11>
       <Unit12>
         <Filename Value="C:\lazarus\fpc\2.6.0\source\rtl\win64\windows.pp"/>
@@ -131,28 +131,28 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="53" Y="8"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit12>
       <Unit13>
         <Filename Value="C:\lazarus\fpc\2.6.0\source\rtl\win\wininc\defines.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1176"/>
         <CursorPos X="5" Y="1200"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit13>
       <Unit14>
         <Filename Value="C:\lazarus\fpc\2.6.0\source\rtl\win\wininc\base.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="343"/>
         <CursorPos X="3" Y="367"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit14>
       <Unit15>
         <Filename Value="C:\lazarus\fpc\2.6.0\source\rtl\inc\systemh.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="248"/>
         <CursorPos X="3" Y="272"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit15>
       <Unit16>
         <Filename Value="davecad_sheet_properties_form.pas"/>
@@ -164,7 +164,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="129" Y="13"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit16>
@@ -175,123 +175,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="davecad_file.pas"/>
-        <Caret Line="282" Column="1" TopLine="257"/>
+        <Caret Line="58" Column="40" TopLine="19"/>
       </Position1>
       <Position2>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="51" Column="90" TopLine="8"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="323" Column="111" TopLine="285"/>
       </Position2>
       <Position3>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="36" Column="24" TopLine="1"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="320" Column="54" TopLine="296"/>
       </Position3>
       <Position4>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="13" Column="27" TopLine="1"/>
+        <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
+        <Caret Line="1948" Column="1" TopLine="1924"/>
       </Position4>
       <Position5>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="30" Column="39" TopLine="4"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="319" Column="1" TopLine="296"/>
       </Position5>
       <Position6>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="26" Column="1" TopLine="1"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="318" Column="13" TopLine="296"/>
       </Position6>
       <Position7>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="33" Column="24" TopLine="5"/>
+        <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
+        <Caret Line="1676" Column="1" TopLine="1652"/>
       </Position7>
       <Position8>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="38" Column="55" TopLine="14"/>
+        <Filename Value="davecad_file.pas"/>
+        <Caret Line="287" Column="15" TopLine="271"/>
       </Position8>
       <Position9>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="39" Column="57" TopLine="15"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="318" Column="13" TopLine="296"/>
       </Position9>
       <Position10>
-        <Filename Value="davecad_sheet_properties_form.pas"/>
-        <Caret Line="58" Column="11" TopLine="15"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="323" Column="65" TopLine="299"/>
       </Position10>
       <Position11>
-        <Filename Value="davecad_main.pas"/>
-        <Caret Line="314" Column="9" TopLine="287"/>
+        <Filename Value="davecad_file.pas"/>
+        <Caret Line="313" Column="3" TopLine="271"/>
       </Position11>
       <Position12>
-        <Filename Value="davecad_main.pas"/>
-        <Caret Line="299" Column="11" TopLine="275"/>
+        <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
+        <Caret Line="1676" Column="1" TopLine="1652"/>
       </Position12>
       <Position13>
-        <Filename Value="davecad_main.pas"/>
-        <Caret Line="307" Column="15" TopLine="283"/>
+        <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
+        <Caret Line="1746" Column="1" TopLine="1722"/>
       </Position13>
       <Position14>
-        <Filename Value="davecad_main.pas"/>
-        <Caret Line="364" Column="43" TopLine="321"/>
+        <Filename Value="davecad_file.pas"/>
+        <Caret Line="58" Column="18" TopLine="46"/>
       </Position14>
       <Position15>
         <Filename Value="davecad_file.pas"/>
-        <Caret Line="58" Column="34" TopLine="33"/>
+        <Caret Line="225" Column="4" TopLine="222"/>
       </Position15>
       <Position16>
         <Filename Value="davecad_file.pas"/>
-        <Caret Line="309" Column="54" TopLine="267"/>
+        <Caret Line="58" Column="35" TopLine="33"/>
       </Position16>
       <Position17>
-        <Filename Value="davecad_file.pas"/>
-        <Caret Line="58" Column="40" TopLine="19"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="335" Column="9" TopLine="313"/>
       </Position17>
       <Position18>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="323" Column="111" TopLine="285"/>
+        <Caret Line="353" Column="26" TopLine="314"/>
       </Position18>
       <Position19>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="320" Column="54" TopLine="296"/>
+        <Caret Line="335" Column="3" TopLine="314"/>
       </Position19>
       <Position20>
-        <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
-        <Caret Line="1948" Column="1" TopLine="1924"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="326" Column="3" TopLine="315"/>
       </Position20>
       <Position21>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="319" Column="1" TopLine="296"/>
+        <Caret Line="293" Column="3" TopLine="268"/>
       </Position21>
       <Position22>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="318" Column="13" TopLine="296"/>
+        <Caret Line="225" Column="3" TopLine="200"/>
       </Position22>
       <Position23>
-        <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
-        <Caret Line="1676" Column="1" TopLine="1652"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="146" Column="5" TopLine="121"/>
       </Position23>
       <Position24>
-        <Filename Value="davecad_file.pas"/>
-        <Caret Line="287" Column="15" TopLine="271"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="373" Column="24" TopLine="334"/>
       </Position24>
       <Position25>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="318" Column="13" TopLine="296"/>
+        <Caret Line="353" Column="20" TopLine="334"/>
       </Position25>
       <Position26>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="323" Column="65" TopLine="299"/>
+        <Caret Line="335" Column="3" TopLine="326"/>
       </Position26>
       <Position27>
-        <Filename Value="davecad_file.pas"/>
-        <Caret Line="313" Column="3" TopLine="271"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="326" Column="3" TopLine="301"/>
       </Position27>
       <Position28>
-        <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
-        <Caret Line="1676" Column="1" TopLine="1652"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="293" Column="3" TopLine="268"/>
       </Position28>
       <Position29>
-        <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
-        <Caret Line="1746" Column="1" TopLine="1722"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="223" Column="28" TopLine="200"/>
       </Position29>
       <Position30>
-        <Filename Value="davecad_file.pas"/>
-        <Caret Line="58" Column="18" TopLine="46"/>
+        <Filename Value="davecad_main.pas"/>
+        <Caret Line="146" Column="5" TopLine="121"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

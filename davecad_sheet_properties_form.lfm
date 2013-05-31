@@ -84,7 +84,7 @@ object frmSheetProps: TfrmSheetProps
       ItemIndex = 0
       Items.Strings = (
         'post-it'
-        'notebook-A4'
+        'notepad-A4'
       )
       TabOrder = 3
       Text = 'post-it'
