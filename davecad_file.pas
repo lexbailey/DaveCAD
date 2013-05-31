@@ -2,10 +2,12 @@ unit davecad_file;
 
 {$mode objfpc}{$H+}
 
+//{$R newFile.rc}
+
 interface
 
 uses
-  Classes, SysUtils, laz2_XMLRead, laz2_DOM, davecad_error, laz2_XMLWrite, davecad_file_parser, dialogs;
+  Classes, SysUtils, laz2_XMLRead, laz2_DOM, davecad_error, laz2_XMLWrite, davecad_file_parser, dialogs, LResources;
 
   type
 
@@ -21,10 +23,12 @@ uses
         fFileName: string;
         fFileValid: boolean;
         fFile: TXMLDocument;
+        fModified: boolean;
 
         fECallback: TDaveCadFileErrorCallback;
 
         procedure XMLErrorHandler(E: EXMLReadError);
+        procedure modify;
 
       public
 
@@ -48,8 +52,10 @@ uses
         //function for getting validity
         function isValid: boolean;
 
-        //functions for adding things to the file
+        //functions for adding things to the file, editting or removing them
         procedure addSheet(name_s: string; media_s: string; author_s: string; date_s: string);
+        function deleteSheet(name_s: string): integer;
+        procedure updateSheetProps(sheet: TDOMElement; newname, newAuthor, newDate, newMedia: string);
 
         //functions for getting info from the file
         function getDOM:TXMLDocument; //Gets everything
@@ -61,6 +67,9 @@ uses
         constructor create(E: TDaveCadFileErrorCallback); //adds callback too
         destructor destroy; override;
 
+        property IsModified: boolean read fModified;
+        property fileName: string read fFileNAme;
+
     end;
 
 const
@@ -68,12 +77,18 @@ const
 
 implementation
 
+procedure TDaveCadFile.modify;
+begin
+  fModified:=true;
+end;
+
 constructor TDaveCadFile.create;
 begin
   inherited create;
   //just some inits...
   fFileName := '';
   fFileValid := false;
+  fModified:=false;
 end;
 
 constructor TDaveCadFile.create (E: TDaveCadFileErrorCallback);
@@ -126,10 +141,8 @@ begin
       Parser.OnError := @XMLErrorHandler;
       // now do the job
       Parser.Parse(Src, fFile);
-      // ...and cleanup
     except
     end;
-
     Input.free;
     Parser.Free;
     Src.Free;
@@ -164,35 +177,53 @@ begin
   result:=true;
   if (not (ffileName = ''))and fFileValid then begin
     writeXMLFile(fFile, fFileName);
+    fModified:=false;
     result:= false;
   end;
 end;
 
 procedure TDaveCadFile.new;
-var RootNode: TDOMNode;
+var
+  Parser: TDOMParser;
+  Src: TXMLInputSource;
+  InputS: TResourceStream;
 begin
   closeFile;
-  fFile := TXMLDocument.Create;
+  try
+        fFileValid := true;
+        // create a parser object
+        Parser := TDOMParser.Create;
+        // get the data for a blank file
+        InputS := TResourceStream.Create(HInstance, 'newFile', PChar(10));//is PChar(10) dodgy????
+        // create the input source
+        Src := TXMLInputSource.Create(InputS);
+        // we want validation
+        Parser.Options.Validate := True;
+        // assign a error handler which will receive notifications
+        Parser.OnError := @XMLErrorHandler;
+        // now do the job
+        Parser.Parse(Src, fFile);
+  except
+  end;
+  InputS.free;
+  Parser.Free;
+  Src.Free;
 
-  RootNode := fFile.CreateElement('DaveCADDrawing');
-  TDOMElement(RootNode).SetAttribute('file-version', FileSaveVersionNumber);
-  fFile.AppendChild(RootNode);
-
-  addSheet('sheet1', 'post-it', 'user', '00-00-00');
   session.SelectedSheet:='sheet1';
-
   fFileValid:=true;
+  modify;
 end;
 
 procedure TDaveCadFile.newFileName(name: string);
 begin
-  if fFileName = '' then
     fFileName:=name;
+    //file modified
 end;
 
 //This function adds a sheet to the currently loaded file.
 procedure TDaveCadFile.addSheet(name_s: string; media_s: string; author_s: string; date_s: string);
-var root, sheet, properties, objects, name, media, author, date, name_data, media_data, author_data, date_data: TDOMNode;
+var sheet, properties, objects, name, media, author, date: TDOMElement;
+  name_data, media_data, author_data, date_data: TDOMText;
 begin
   //make a new sheet
   sheet := fFile.CreateElement('sheet');
@@ -200,20 +231,20 @@ begin
     properties := fFile.CreateElement('properties');
     sheet.AppendChild(properties);
 
-      name := fFile.CreateElement('property'); TDOMElement(name).SetAttribute('name', 'sheet-name');
-      media := fFile.CreateElement('property'); TDOMElement(media).SetAttribute('name', 'media');
-      author := fFile.CreateElement('property'); TDOMElement(author).SetAttribute('name', 'author');
-      date := fFile.CreateElement('property'); TDOMElement(date).SetAttribute('name', 'date');
+      name := fFile.CreateElement('property'); name.SetAttribute('name', 'sheet-name');
+      media := fFile.CreateElement('property'); media.SetAttribute('name', 'media');
+      author := fFile.CreateElement('property'); author.SetAttribute('name', 'author');
+      date := fFile.CreateElement('property'); date.SetAttribute('name', 'date');
 
       properties.AppendChild(name);
       properties.AppendChild(media);
       properties.AppendChild(author);
       properties.AppendChild(date);
 
-      name_data := fFile.CreateTextNode(name_s);
-      media_data := fFile.CreateTextNode(media_s);
-      author_data := fFile.CreateTextNode(author_s);
-      date_data := fFile.CreateTextNode(date_s);
+      name_data := (fFile.CreateTextNode(name_s));
+      media_data := (fFile.CreateTextNode(media_s));
+      author_data := (fFile.CreateTextNode(author_s));
+      date_data := (fFile.CreateTextNode(date_s));
 
       name.AppendChild(name_data);
       media.AppendChild(media_data);
@@ -224,10 +255,47 @@ begin
       objects := fFile.CreateElement('objects');
       sheet.AppendChild(objects);
 
-    //Put it all in the root node
-    root := fFile.FindNode('DaveCADDrawing') ;
-    root.AppendChild(sheet);
+    fFile.DocumentElement.AppendChild(sheet);
+    modify;
+end;
 
+function TDaveCadFile.deleteSheet(name_s:string): integer;
+var sheets: TDOMNodeList;
+  sheet: TDaveCADSheet;
+  i : integer;
+begin
+  sheets := fFile.DocumentElement.GetElementsByTagName('sheet');
+  for i := 0 to sheets.Count-1 do begin
+      sheet := TDaveCADSheet.create;
+      sheet.loadFrom(TDOMElement(sheets.Item[i]));
+      if sheet.Name = name_s then //we have out guy
+      begin
+        fFile.DocumentElement.RemoveChild(sheets.Item[i]);
+        result:= 0;
+        exit;
+      end;
+  end;
+  result := DCAD_WARN_INVALID_SHEET_SELECTED;
+end;
+
+procedure TDaveCadFile.updateSheetProps(sheet: TDOMElement; newname, newAuthor, newDate, newMedia: string);
+var properties: TDOMNodeList;
+    i: integer;
+    ThisProp: TDOMElement;
+begin
+  properties := TDOMElement(sheet.FindNode('properties')).GetElementsByTagName('property');
+    for i := 0 to properties.Count-1 do begin
+      ThisProp := TDOMElement(properties.Item[i]);
+      if ThisProp.GetAttribute('name') = 'sheet-name' then
+        ThisProp.ReplaceChild(fFile.CreateTextNode(newName), ThisProp.FirstChild);
+      if ThisProp.GetAttribute('name') = 'author' then
+        ThisProp.ReplaceChild(fFile.CreateTextNode(newAuthor), ThisProp.FirstChild);
+      if ThisProp.GetAttribute('name') = 'media' then
+        ThisProp.ReplaceChild(fFile.CreateTextNode(newMedia), ThisProp.FirstChild);
+      if ThisProp.GetAttribute('name') = 'date' then
+        ThisProp.ReplaceChild(fFile.CreateTextNode(newDate), ThisProp.FirstChild);
+    end;
+  modify;
 end;
 
 function TDaveCadFile.getDOM:TXMLDocument;

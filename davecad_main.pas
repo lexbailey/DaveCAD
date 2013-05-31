@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
   ActnList, ComCtrls, ExtCtrls, StdCtrls, StdActns, laz2_XMLRead, laz2_DOM,
-  davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer;
+  davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer, davecad_sheet_properties_form;
 
 type
 
@@ -90,6 +90,9 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure pbDrawingPaint(Sender: TObject);
+    procedure SheetDeleteExecute(Sender: TObject);
+    procedure SheetEditExecute(Sender: TObject);
+    procedure SheetNewExecute(Sender: TObject);
     procedure tcSheetsChange(Sender: TObject);
     procedure TOpenDialogShow(Sender: TObject);
   private
@@ -99,6 +102,7 @@ type
     procedure rescan();
   public
     { public declarations }
+    procedure changeSheetProps(oldSheetName, newSheetName, newSheetAuthor, newSheetDate, newSheetMedia: string);
   end;
 
 var
@@ -106,7 +110,6 @@ var
   loadedFile: TDaveCadFile;
   errors: TDaveCadMessageList;
   fileState: TFileState;
-  fileIsModified: boolean;
   fileWasSaved: boolean;
 
 implementation
@@ -188,7 +191,7 @@ end;
 procedure TfrmMain.FileCloseExecute(Sender: TObject);
 var answer: TModalResult;
 begin
-  if ((fileState = fsLoadedValidNoSheet) or (fileState = fsLoadedValid)) and fileIsModified then begin
+  if ((fileState = fsLoadedValidNoSheet) or (fileState = fsLoadedValid)) and loadedFile.IsModified then begin
     answer := askQuestion(DCAD_QUES_UNSAVED_CHANGES);
     case answer of
       mrYes: begin
@@ -228,7 +231,6 @@ begin
   errors := TDaveCadMessageList.create;
   errors.setHead('DaveCAD Error');
   fileState:=fsNoFile;
-  fileIsModified := true;//for now.
   fileWasSaved := true;
 end;
 
@@ -285,6 +287,53 @@ begin
 
 end;
 
+procedure TfrmMain.SheetDeleteExecute(Sender: TObject);
+begin
+  showError(loadedFile.deleteSheet(loadedFile.Session.SelectedSheet));
+  rescan;
+end;
+
+procedure TfrmMain.SheetEditExecute(Sender: TObject);
+var sheet: TDaveCADSheet;
+begin
+  sheet := loadedFile.getSheets.Sheet[loadedFile.Session.SelectedSheet];
+  with frmSheetProps do begin
+    gbEdit.Caption:= 'Editing sheet in file ' + loadedFile.fileName;
+    sheetEdit:=sheet.Name;
+    eName.Text:=sheet.Name;
+    eAuthor.Text:=sheet.Author;
+    eDate.Text:=sheet.Date;
+    cbMedia.ItemIndex:=cbMedia.Items.IndexOf(sheet.Media);
+    callback:=@frmMain.changeSheetProps;
+    Show;
+  end;
+end;
+
+procedure TfrmMain.changeSheetProps(oldSheetName, newSheetName, newSheetAuthor, newSheetDate, newSheetMedia: string);
+var oldSheet: TDaveCADSheet;
+  allSheets: TDOMNodeList;
+  i: integer;
+begin
+  oldSheet := TDaveCADSheet.create;
+  allSheets :=loadedFile.getDOM.DocumentElement.GetElementsByTagName('sheet');
+  for i := 0 to allSheets.Count-1 do begin;
+    oldSheet.loadFrom(TDOMElement(allSheets.Item[i]));
+    if oldSheet.Name = oldSheetName then //we have our guy
+    begin
+      loadedFile.updateSheetProps(TDomElement(allSheets.Item[i]), newSheetName, newSheetAuthor, newSheetDate, newSheetMedia);
+    end;
+  end;
+end;
+
+procedure TfrmMain.SheetNewExecute(Sender: TObject);
+var sheetName: string;
+begin
+  sheetName := 'sheet '+inttostr(loadedFile.getSheets.count+1);
+  loadedFile.addSheet( sheetName, 'post-it', 'User', '');
+  loadedFile.Session.SelectedSheet:=sheetName;
+  rescan;
+end;
+
 procedure TfrmMain.tcSheetsChange(Sender: TObject);
 begin
   //User has selected a new sheet!
@@ -316,6 +365,16 @@ begin
       tcSheets.Tabs.Add(sheets.Item[i].Name);
     end;
   end;
+
+  if tcSheets.Tabs.IndexOf(loadedFile.Session.SelectedSheet) = -1 then begin
+    if tcSheets.Tabs.Count >= 1 then begin
+      loadedFile.Session.SelectedSheet:=tcSheets.Tabs.Strings[0];
+    end else
+    begin
+      loadedFile.Session.SelectedSheet:='';
+    end;
+  end;
+
 end;
 
 end.

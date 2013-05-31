@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
   Left = 101
   Height = 581
-  Top = 121
+  Top = 122
   Width = 713
   Caption = 'DaveCAD'
   ClientHeight = 561
@@ -786,6 +786,7 @@ object frmMain: TfrmMain
       Caption = '&New sheet...'
       Hint = 'Creates a new sheet in this drawing file'
       ImageIndex = 17
+      OnExecute = SheetNewExecute
       ShortCut = 24654
     end
     object SheetDelete: TAction
@@ -793,12 +794,14 @@ object frmMain: TfrmMain
       Caption = '&Delete sheet'
       Hint = 'Deletes the currently selected sheet'
       ImageIndex = 8
+      OnExecute = SheetDeleteExecute
     end
     object SheetEdit: TAction
       Category = 'Sheet'
       Caption = '&Edit sheet properties'
       Hint = 'Edit properties for the currently selected sheet'
       ImageIndex = 16
+      OnExecute = SheetEditExecute
       ShortCut = 118
     end
   end

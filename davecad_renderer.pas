@@ -11,7 +11,7 @@ procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: in
 
 const
   RENDER_MEDIA_POST_IT = 'post-it';
-  RENDER_MEDIA_NOTEBOOK_A4 = 'notebook-a4';
+  RENDER_MEDIA_NOTEBOOK_A4 = 'notebook-A4';
 
   RENDER_TOOL_BALL_POINT = 'ball-point';
   RENDER_TOOL_FELT_TIP = 'felt-tip';
