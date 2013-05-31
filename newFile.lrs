@@ -1,0 +1,18 @@
+LazarusResources.Add('newFile','DCDX',[
+  '<?xml version="1.0"?>'#13#10'<!DOCTYPE DaveCADDrawing ['#13#10'<!ELEMENT Dav'
+  +'eCADDrawing (sheet+)>'#13#10'<!ELEMENT sheet (properties, objects)>'#13#10
+  +'<!ELEMENT properties (property*)>'#13#10'<!ELEMENT objects (object*)>'#13#10
+  +#13#10'<!ELEMENT property (#PCDATA)>'#13#10'<!ELEMENT object (#PCDATA)>'#13
+  +#10#13#10'<!ATTLIST DaveCADDrawing file-version CDATA #REQUIRED>'#13#10'<!AT'
+  +'TLIST property name (media|sheet-name|author|date) #REQUIRED>'#13#10#13#10
+  +'<!ATTLIST object tool (ball-point|felt-tip|pencil) #REQUIRED>'#13#10'<!ATTL'
+  +'IST object colour (red|black|green|blue) #REQUIRED>'#13#10'<!ATTLIST object'
+  +' top CDATA #REQUIRED>'#13#10'<!ATTLIST object left CDATA #REQUIRED>'#13#10
+  +'<!ATTLIST object top1 CDATA #IMPLIED>'#13#10'<!ATTLIST object left1 CDATA #'
+  +'IMPLIED>'#13#10']>'#13#10'<DaveCADDrawing file-version="0.1">'#13#10'  <she'
+  +'et>'#13#10'    <properties>'#13#10'      <property name="media">post-it</pr'
+  +'operty>'#13#10'      <property name="sheet-name">sheet1</property>'#13#10' '
+  +'     <property name="author">User</property>'#13#10'      <property name="d'
+  +'ate">00/00/00</property>'#13#10'    </properties>'#13#10'    <objects/>'#13
+  +#10'  </sheet>'#13#10'</DaveCADDrawing>'
+]);

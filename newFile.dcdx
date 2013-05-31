@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE DaveCADDrawing [
+<!ELEMENT DaveCADDrawing (sheet+)>
+<!ELEMENT sheet (properties, objects)>
+<!ELEMENT properties (property*)>
+<!ELEMENT objects (object*)>
+
+<!ELEMENT property (#PCDATA)>
+<!ELEMENT object (#PCDATA)>
+
+<!ATTLIST DaveCADDrawing file-version CDATA #REQUIRED>
+<!ATTLIST property name (media|sheet-name|author|date) #REQUIRED>
+
+<!ATTLIST object tool (ball-point|felt-tip|pencil) #REQUIRED>
+<!ATTLIST object colour (red|black|green|blue) #REQUIRED>
+<!ATTLIST object top CDATA #REQUIRED>
+<!ATTLIST object left CDATA #REQUIRED>
+<!ATTLIST object top1 CDATA #IMPLIED>
+<!ATTLIST object left1 CDATA #IMPLIED>
+]>
+<DaveCADDrawing file-version="0.1">
+  <sheet>
+    <properties>
+      <property name="media">post-it</property>
+      <property name="sheet-name">sheet1</property>
+      <property name="author">User</property>
+      <property name="date">00/00/00</property>
+    </properties>
+    <objects/>
+  </sheet>
+</DaveCADDrawing>
