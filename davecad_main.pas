@@ -221,7 +221,6 @@ begin
   loadedFile.new;
 //  fileState:=fsLoadedValidNoSheet;
   fileState:=fsLoadedValid;
-  pbDrawing.Invalidate;
   rescan;
 end;
 
@@ -323,6 +322,7 @@ begin
       loadedFile.updateSheetProps(TDomElement(allSheets.Item[i]), newSheetName, newSheetAuthor, newSheetDate, newSheetMedia);
     end;
   end;
+  rescan;
 end;
 
 procedure TfrmMain.SheetNewExecute(Sender: TObject);
@@ -374,7 +374,7 @@ begin
       loadedFile.Session.SelectedSheet:='';
     end;
   end;
-
+  pbDrawing.Invalidate;
 end;
 
 end.
