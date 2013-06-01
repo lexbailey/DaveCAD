@@ -77,7 +77,7 @@ type
     tbText: TToolButton;
     tcSheets: TTabControl;
     ToolBar1: TToolBar;
-    ToolBar2: TToolBar;
+    tbEditTool: TToolBar;
     ToolBar3: TToolBar;
     tbNew: TToolButton;
     tbOpen: TToolButton;
@@ -108,6 +108,8 @@ type
     procedure SheetDeleteExecute(Sender: TObject);
     procedure SheetEditExecute(Sender: TObject);
     procedure SheetNewExecute(Sender: TObject);
+    procedure tbDrawingToolClick(Sender: TObject);
+    procedure tbEditingToolClick(Sender: TObject);
     procedure tcSheetsChange(Sender: TObject);
     procedure TOpenDialogShow(Sender: TObject);
   private
@@ -120,12 +122,23 @@ type
     procedure changeSheetProps(oldSheetName, newSheetName, newSheetAuthor, newSheetDate, newSheetMedia: string);
   end;
 
+const
+  DRAW_TOOL_PENCIL: integer = 0;
+  DRAW_TOOL_BALLPOINT: integer = 1;
+  DRAW_TOOL_FELT: integer = 2;
+
+  EDIT_TOOL_DRAWFREE: integer = 0;
+  EDIT_TOOL_MOVE: integer = 1;
+  EDIT_TOOL_TEXT: integer = 2;
+
 var
   frmMain: TfrmMain;
   loadedFile: TDaveCadFile;
   errors: TDaveCadMessageList;
   fileState: TFileState;
   fileWasSaved: boolean;
+  drawingTool : integer;
+  edittingTool : integer;
 
 implementation
 
@@ -251,6 +264,9 @@ begin
   errors.setHead('DaveCAD Error');
   fileState:=fsNoFile;
   fileWasSaved := true;
+
+  drawingTool := 0;
+  edittingTool := 0;
 end;
 
 procedure TfrmMain.pbDrawText(pbtext: string);
@@ -357,6 +373,31 @@ begin
   loadedFile.addSheet( sheetName, 'post-it', 'User', '');
   loadedFile.Session.SelectedSheet:=sheetName;
   rescan;
+end;
+
+//Single handler for each group of toolbox items
+procedure TfrmMain.tbEditingToolClick(Sender: TObject);
+var i :integer;
+begin
+  //loop through all buttons in the group and deselect each one
+  for i := 0 to tbEditTool.ButtonCount-1 do begin
+    tbEditTool.Buttons[i].Down:=false;
+  end;
+  //select the one that was clicked
+  TToolButton(sender).Down:=true;
+  //Save the tool name
+  EdittingTool := TToolButton(sender).Tag;
+end;
+
+//Similar to avove
+procedure TfrmMain.tbDrawingToolClick(Sender: TObject);
+var i :integer;
+begin
+  for i := 0 to tbDrawingTool.ButtonCount-1 do begin
+    tbDrawingTool.Buttons[i].Down:=false;
+  end;
+  TToolButton(sender).Down:=true;
+  DrawingTool := TToolButton(sender).Tag;
 end;
 
 procedure TfrmMain.tcSheetsChange(Sender: TObject);

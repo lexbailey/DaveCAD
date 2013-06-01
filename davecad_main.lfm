@@ -208,23 +208,29 @@ object frmMain: TfrmMain
           Hint = 'Pencil'
           Top = 2
           Caption = 'Pencil'
+          Down = True
           ImageIndex = 2
+          OnClick = tbDrawingToolClick
           Style = tbsCheck
         end
         object tpBallPoint: TToolButton
+          Tag = 1
           Left = 41
           Hint = 'Ballpoint'
           Top = 2
           Caption = 'Ballpoint'
           ImageIndex = 0
+          OnClick = tbDrawingToolClick
           Style = tbsCheck
         end
         object tbFelt: TToolButton
+          Tag = 2
           Left = 96
           Hint = 'Felt-tip'
           Top = 2
           Caption = 'Felt-tip'
           ImageIndex = 1
+          OnClick = tbDrawingToolClick
           Style = tbsCheck
         end
       end
@@ -237,14 +243,13 @@ object frmMain: TfrmMain
         Caption = 'Editting tools'
         ParentColor = False
       end
-      object ToolBar2: TToolBar
+      object tbEditTool: TToolBar
         Left = 1
         Height = 110
         Top = 115
         Width = 172
         AutoSize = True
         ButtonHeight = 54
-        Caption = 'ToolBar2'
         Images = ilEditTools
         ShowCaptions = True
         TabOrder = 1
@@ -253,23 +258,29 @@ object frmMain: TfrmMain
           Hint = 'Draw a freehand line with the currently selected drawing tool'
           Top = 2
           Caption = 'Draw Freehand'
+          Down = True
           ImageIndex = 0
+          OnClick = tbEditingToolClick
           Style = tbsCheck
         end
         object tbMove: TToolButton
+          Tag = 1
           Left = 88
           Hint = 'Move objects around on the drawing'
           Top = 2
           Caption = 'Move'
           ImageIndex = 1
+          OnClick = tbEditingToolClick
           Style = tbsCheck
         end
         object tbText: TToolButton
+          Tag = 2
           Left = 1
           Hint = 'Insert text intot the drawing'
           Top = 56
           Caption = 'Insert Text'
           ImageIndex = 2
+          OnClick = tbEditingToolClick
           Style = tbsCheck
         end
       end

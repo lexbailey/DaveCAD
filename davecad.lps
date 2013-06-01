@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="11">
+    <Units Count="10">
       <Unit0>
         <Filename Value="davecad.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -26,8 +26,8 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="351"/>
-        <CursorPos X="89" Y="391"/>
+        <TopLine Value="102"/>
+        <CursorPos X="17" Y="132"/>
         <UsageCount Value="233"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -55,23 +55,16 @@
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="C:\lazarus\fpc\2.6.0\source\rtl\objpas\classes\classesh.inc"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="921"/>
-        <CursorPos X="3" Y="945"/>
-        <UsageCount Value="0"/>
-      </Unit4>
-      <Unit5>
         <Filename Value="C:\lazarus\components\lazutils\laz2_xmlread.pas"/>
         <UnitName Value="laz2_XMLRead"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
         <TopLine Value="3364"/>
         <CursorPos X="27" Y="3370"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="74"/>
         <Loaded Value="True"/>
-      </Unit5>
-      <Unit6>
+      </Unit4>
+      <Unit5>
         <Filename Value="C:\lazarus\components\lazutils\laz2_dom.pas"/>
         <UnitName Value="laz2_DOM"/>
         <EditorIndex Value="6"/>
@@ -80,8 +73,8 @@
         <CursorPos X="1" Y="1746"/>
         <UsageCount Value="91"/>
         <Loaded Value="True"/>
-      </Unit6>
-      <Unit7>
+      </Unit5>
+      <Unit6>
         <Filename Value="davecad_file_parser.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="davecad_file_parser"/>
@@ -91,8 +84,8 @@
         <CursorPos X="3" Y="64"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
-      </Unit7>
-      <Unit8>
+      </Unit6>
+      <Unit7>
         <Filename Value="davecad_renderer.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="davecad_renderer"/>
@@ -100,10 +93,10 @@
         <WindowIndex Value="0"/>
         <TopLine Value="4"/>
         <CursorPos X="23" Y="50"/>
-        <UsageCount Value="182"/>
+        <UsageCount Value="183"/>
         <Loaded Value="True"/>
-      </Unit8>
-      <Unit9>
+      </Unit7>
+      <Unit8>
         <Filename Value="davecad_sheet_properties_form.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSheetProps"/>
@@ -113,11 +106,11 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="129" Y="13"/>
-        <UsageCount Value="70"/>
+        <UsageCount Value="71"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-      </Unit9>
-      <Unit10>
+      </Unit8>
+      <Unit9>
         <Filename Value="davecad_about.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmAbout"/>
@@ -127,10 +120,10 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="48" Y="2"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="66"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-      </Unit10>
+      </Unit9>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
@@ -138,75 +131,75 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="390" Column="89" TopLine="350"/>
+        <Caret Line="385" Column="89" TopLine="345"/>
       </Position1>
       <Position2>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="389" Column="89" TopLine="349"/>
+        <Caret Line="384" Column="89" TopLine="344"/>
       </Position2>
       <Position3>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="388" Column="89" TopLine="348"/>
+        <Caret Line="383" Column="89" TopLine="343"/>
       </Position3>
       <Position4>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="387" Column="89" TopLine="347"/>
+        <Caret Line="382" Column="89" TopLine="342"/>
       </Position4>
       <Position5>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="386" Column="89" TopLine="346"/>
+        <Caret Line="381" Column="89" TopLine="341"/>
       </Position5>
       <Position6>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="385" Column="89" TopLine="345"/>
+        <Caret Line="380" Column="89" TopLine="340"/>
       </Position6>
       <Position7>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="384" Column="89" TopLine="344"/>
+        <Caret Line="379" Column="89" TopLine="339"/>
       </Position7>
       <Position8>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="383" Column="89" TopLine="343"/>
+        <Caret Line="391" Column="89" TopLine="351"/>
       </Position8>
       <Position9>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="382" Column="89" TopLine="342"/>
+        <Caret Line="390" Column="89" TopLine="350"/>
       </Position9>
       <Position10>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="381" Column="89" TopLine="341"/>
+        <Caret Line="391" Column="89" TopLine="351"/>
       </Position10>
       <Position11>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="380" Column="89" TopLine="340"/>
+        <Caret Line="390" Column="89" TopLine="350"/>
       </Position11>
       <Position12>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="379" Column="89" TopLine="339"/>
+        <Caret Line="391" Column="89" TopLine="351"/>
       </Position12>
       <Position13>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="391" Column="89" TopLine="351"/>
+        <Caret Line="390" Column="89" TopLine="350"/>
       </Position13>
       <Position14>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="390" Column="89" TopLine="350"/>
+        <Caret Line="391" Column="89" TopLine="351"/>
       </Position14>
       <Position15>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="391" Column="89" TopLine="351"/>
+        <Caret Line="390" Column="89" TopLine="350"/>
       </Position15>
       <Position16>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="390" Column="89" TopLine="350"/>
+        <Caret Line="389" Column="89" TopLine="349"/>
       </Position16>
       <Position17>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="391" Column="89" TopLine="351"/>
+        <Caret Line="388" Column="89" TopLine="348"/>
       </Position17>
       <Position18>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="390" Column="89" TopLine="350"/>
+        <Caret Line="387" Column="89" TopLine="347"/>
       </Position18>
       <Position19>
         <Filename Value="davecad_main.pas"/>
@@ -218,43 +211,43 @@
       </Position20>
       <Position21>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="389" Column="89" TopLine="349"/>
+        <Caret Line="391" Column="89" TopLine="351"/>
       </Position21>
       <Position22>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="388" Column="89" TopLine="348"/>
+        <Caret Line="390" Column="89" TopLine="350"/>
       </Position22>
       <Position23>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="387" Column="89" TopLine="347"/>
+        <Caret Line="389" Column="89" TopLine="349"/>
       </Position23>
       <Position24>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="391" Column="89" TopLine="351"/>
+        <Caret Line="388" Column="89" TopLine="348"/>
       </Position24>
       <Position25>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="390" Column="89" TopLine="350"/>
+        <Caret Line="387" Column="89" TopLine="347"/>
       </Position25>
       <Position26>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="391" Column="89" TopLine="351"/>
+        <Caret Line="397" Column="89" TopLine="357"/>
       </Position26>
       <Position27>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="390" Column="89" TopLine="350"/>
+        <Caret Line="310" Column="45" TopLine="308"/>
       </Position27>
       <Position28>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="389" Column="89" TopLine="349"/>
+        <Caret Line="312" Column="42" TopLine="297"/>
       </Position28>
       <Position29>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="388" Column="89" TopLine="348"/>
+        <Caret Line="132" Column="11" TopLine="103"/>
       </Position29>
       <Position30>
         <Filename Value="davecad_main.pas"/>
-        <Caret Line="387" Column="89" TopLine="347"/>
+        <Caret Line="131" Column="3" TopLine="109"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>
