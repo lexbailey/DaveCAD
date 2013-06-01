@@ -1,7 +1,7 @@
 object frmSheetProps: TfrmSheetProps
-  Left = 835
+  Left = 330
   Height = 204
-  Top = 123
+  Top = 282
   Width = 250
   BorderStyle = bsToolWindow
   Caption = 'Edit Sheet Properties'

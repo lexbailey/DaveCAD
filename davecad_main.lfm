@@ -749,6 +749,7 @@ object frmMain: TfrmMain
       Category = 'Help'
       Caption = 'About'
       ImageIndex = 12
+      OnExecute = actAboutExecute
     end
     object FileSave: TAction
       Category = 'File'

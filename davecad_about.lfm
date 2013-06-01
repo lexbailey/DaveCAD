@@ -1,0 +1,37 @@
+object frmAbout: TfrmAbout
+  Left = 344
+  Height = 132
+  Top = 323
+  Width = 217
+  Caption = 'About DaveCAD'
+  ClientHeight = 132
+  ClientWidth = 217
+  LCLVersion = '1.0.6.0'
+  object StaticText1: TStaticText
+    Left = 8
+    Height = 48
+    Top = 56
+    Width = 201
+    Caption = 'Novelty CAD software inspired by the EEVBlog videos (Specifically the videos that contain post-it notes).'
+    TabOrder = 0
+  end
+  object StaticText2: TStaticText
+    Left = 8
+    Height = 33
+    Top = 8
+    Width = 120
+    Caption = 'DaveCAD'
+    Font.Height = -27
+    ParentFont = False
+    TabOrder = 1
+  end
+  object btnOK: TButton
+    Left = 72
+    Height = 25
+    Top = 104
+    Width = 75
+    Caption = 'OK'
+    OnClick = btnOKClick
+    TabOrder = 2
+  end
+end

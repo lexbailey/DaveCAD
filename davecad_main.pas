@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
   ActnList, ComCtrls, ExtCtrls, StdCtrls, StdActns, laz2_XMLRead, laz2_DOM,
-  davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer, davecad_sheet_properties_form;
+  davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer, davecad_sheet_properties_form, davecad_about;
 
 type
 
@@ -81,6 +81,7 @@ type
     tbNewSheet: TToolButton;
     tbDeleteSheet: TToolButton;
     tbEditSheet: TToolButton;
+    procedure actAboutExecute(Sender: TObject);
     procedure FileCloseExecute(Sender: TObject);
     procedure FileNewExecute(Sender: TObject);
     procedure FileOpen1Accept(Sender: TObject);
@@ -213,6 +214,11 @@ begin
   pbDrawing.Invalidate;
   tcSheets.Tabs.Clear;
   fileWasSaved := true;
+end;
+
+procedure TfrmMain.actAboutExecute(Sender: TObject);
+begin
+  frmAbout.Show;
 end;
 
 procedure TfrmMain.FileNewExecute(Sender: TObject);
