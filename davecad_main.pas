@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
   ActnList, ComCtrls, ExtCtrls, StdCtrls, StdActns, laz2_XMLRead, laz2_DOM,
-  davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer, davecad_sheet_properties_form, davecad_about;
+  davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer,
+  davecad_sheet_properties_form, davecad_about, math;
 
 type
 
@@ -17,10 +18,17 @@ type
 
   TfrmMain = class(TForm)
     actAbout: TAction;
+    ilDrawTools: TImageList;
+    ilEditTools: TImageList;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     miEditSheet: TMenuItem;
     miDeleteSheet: TMenuItem;
     miNewSheet: TMenuItem;
     miSheet: TMenuItem;
+    pnlToolbox: TPanel;
+    sbToolbox: TScrollBox;
     SheetEdit: TAction;
     SheetDelete: TAction;
     SheetNew: TAction;
@@ -39,7 +47,6 @@ type
     FileOpen1: TFileOpen;
     FileSaveAs1: TFileSaveAs;
     smallIcons: TImageList;
-    Label1: TLabel;
     MainMenu1: TMainMenu;
     miNew: TMenuItem;
     miDelete: TMenuItem;
@@ -59,10 +66,15 @@ type
     miEdit: TMenuItem;
     miFile: TMenuItem;
     pbDrawing: TPaintBox;
-    Panel1: TPanel;
     Panel2: TPanel;
     Splitter1: TSplitter;
     StatusBar1: TStatusBar;
+    tbDrawFree: TToolButton;
+    tbDrawingTool: TToolBar;
+    tbFelt: TToolButton;
+    tbMove: TToolButton;
+    tbPencil: TToolButton;
+    tbText: TToolButton;
     tcSheets: TTabControl;
     ToolBar1: TToolBar;
     ToolBar2: TToolBar;
@@ -81,6 +93,7 @@ type
     tbNewSheet: TToolButton;
     tbDeleteSheet: TToolButton;
     tbEditSheet: TToolButton;
+    tpBallPoint: TToolButton;
     procedure actAboutExecute(Sender: TObject);
     procedure FileCloseExecute(Sender: TObject);
     procedure FileNewExecute(Sender: TObject);
@@ -91,6 +104,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure pbDrawingPaint(Sender: TObject);
+    procedure sbToolboxResize(Sender: TObject);
     procedure SheetDeleteExecute(Sender: TObject);
     procedure SheetEditExecute(Sender: TObject);
     procedure SheetNewExecute(Sender: TObject);
@@ -290,6 +304,11 @@ begin
     end;
   end;
 
+end;
+
+procedure TfrmMain.sbToolboxResize(Sender: TObject);
+begin
+  pnlToolbox.Width:=max(sbToolbox.Width-4, 90);
 end;
 
 procedure TfrmMain.SheetDeleteExecute(Sender: TObject);
