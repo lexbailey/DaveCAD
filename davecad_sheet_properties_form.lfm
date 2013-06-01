@@ -36,6 +36,7 @@ object frmSheetProps: TfrmSheetProps
       EditLabel.ParentColor = False
       LabelPosition = lpLeft
       TabOrder = 0
+      OnKeyPress = eNameKeyPress
     end
     object eAuthor: TLabeledEdit
       Left = 70
@@ -55,6 +56,7 @@ object frmSheetProps: TfrmSheetProps
       EditLabel.ParentColor = False
       LabelPosition = lpLeft
       TabOrder = 1
+      OnKeyPress = eNameKeyPress
     end
     object eDate: TLabeledEdit
       Left = 70
@@ -74,6 +76,7 @@ object frmSheetProps: TfrmSheetProps
       EditLabel.ParentColor = False
       LabelPosition = lpLeft
       TabOrder = 2
+      OnKeyPress = eNameKeyPress
     end
     object cbMedia: TComboBox
       Left = 70
@@ -86,6 +89,7 @@ object frmSheetProps: TfrmSheetProps
         'post-it'
         'notepad-A4'
       )
+      OnKeyPress = eNameKeyPress
       TabOrder = 3
       Text = 'post-it'
     end

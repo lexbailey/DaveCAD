@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls;
+  ExtCtrls, lclType;
 
 type
 
@@ -28,6 +28,7 @@ type
 
     procedure btnCancelClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
+    procedure eNameKeyPress(Sender: TObject; var Key: char);
 
   private
     fsheetEdit: string;
@@ -57,6 +58,12 @@ procedure TfrmSheetProps.btnOKClick(Sender: TObject);
 begin
   epCallback(fsheetEdit, eName.Text, eAuthor.Text, eDate.Text, cbMedia.Text);
   frmSheetProps.Close;
+end;
+
+procedure TfrmSheetProps.eNameKeyPress(Sender: TObject; var Key: char);
+begin
+  if key = char(VK_RETURN) then
+    btnOK.Click;
 end;
 
 end.
