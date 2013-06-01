@@ -68,7 +68,7 @@ type
     pbDrawing: TPaintBox;
     Panel2: TPanel;
     Splitter1: TSplitter;
-    StatusBar1: TStatusBar;
+    Status: TStatusBar;
     tbDrawFree: TToolButton;
     tbDrawingTool: TToolBar;
     tbFelt: TToolButton;
@@ -110,6 +110,8 @@ type
     procedure SheetNewExecute(Sender: TObject);
     procedure tbDrawingToolClick(Sender: TObject);
     procedure tbEditingToolClick(Sender: TObject);
+    procedure hintMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer
+      );
     procedure tcSheetsChange(Sender: TObject);
     procedure TOpenDialogShow(Sender: TObject);
   private
@@ -387,6 +389,12 @@ begin
   TToolButton(sender).Down:=true;
   //Save the tool name
   EdittingTool := TToolButton(sender).Tag;
+end;
+
+procedure TfrmMain.hintMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  Status.Panels[0].Text := TControl(sender).Hint;
 end;
 
 //Similar to avove
