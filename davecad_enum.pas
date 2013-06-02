@@ -7,6 +7,11 @@ interface
 uses
   Classes, SysUtils;
 
+
+function getDrawTool(tool: string):integer;
+function getEditTool(tool: string):integer;
+function getColour(colour: string):integer;
+
 const
   DRAW_TOOL_PENCIL: integer = 0;
   DRAW_TOOL_BALLPOINT: integer = 1;

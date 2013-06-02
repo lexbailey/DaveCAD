@@ -5,17 +5,9 @@ unit davecad_renderer;
 interface
 
 uses
-  Classes, SysUtils, davecad_file_parser, graphics, LResources;
+  Classes, SysUtils, davecad_file_parser, graphics, LResources, davecad_enum;
 
 procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: integer);
-
-const
-  RENDER_MEDIA_POST_IT = 'post-it';
-  RENDER_MEDIA_NOTEBOOK_A4 = 'notepad-A4';
-
-  RENDER_TOOL_BALL_POINT = 'ball-point';
-  RENDER_TOOL_FELT_TIP = 'felt-tip';
-  RENDER_TOOL_PENCIL = 'pencil';
 
 implementation
 

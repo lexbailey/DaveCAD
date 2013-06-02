@@ -5,9 +5,36 @@ unit davecad_file_parser;
 interface
 
 uses
-  Classes, SysUtils, laz2_DOM;
+  Classes, SysUtils, laz2_DOM, davecad_enum;
 
 type
+
+  //Class for loading information about an object from a TDaveCADFile.getDOM
+  TDaveCADObject = class (TObject)
+    private
+      fObjName: string; //retrieved from the the XML text node, this identifies the object
+      fP1, fP2: TPoint; //these are the points related to the object, usually on the origin (fP1) is used, fP2 is used in (for example) lines.
+      fTool: integer;
+      fColour: integer;
+    public
+
+      procedure loadFrom(dcObject: TDOMElement);
+
+      property Name: string read fObjName;
+      property Origin: TPoint read fP1;
+      property point1: TPoint read fP1; //alias for origin for using where it makes more sense
+      property point2: TPoint read fP2;
+
+      //etc...
+      property originX: longint read fP1.x;
+      property originY: longint read fP1.y;
+      property point1X: longint read fP1.x;
+      property point1Y: longint read fP1.y;
+      property point2X: longint read fP2.x;
+      property point2Y: longint read fP2.y;
+  end;
+
+  //Class for loading information about a sheet from a TDaveCADFile.getDOM
   TDaveCADSheet = class(TObject)
     private
       fName: string;
@@ -15,19 +42,21 @@ type
       fDate: string;
       fMedia: string;
     public
+      //This function loads the sheet from the TDOMElemnt named 'sheet'
       procedure loadFrom(sheet: TDOMElement);
-      function getElement: TDOMElement;
 
+      //properties for all loaded attributes
       property Name: string read fName;
       property Author: string read fAuthor;
       property Date: string read fDate;
       property Media: string read fMedia;
 
+      //stuff, mostly legal.
       constructor create;
-      destructor destroy;
 
   end;
 
+  //A list object for used for containing all sheets in a file
   TDaveCADSheetList = class(TObject)
     private
       fItems: array of TDaveCADSheet;
@@ -44,6 +73,9 @@ type
 
 implementation
 
+  //----------------------------------------------------------------------------
+  // TDaveCADSheet
+  //----------------------------------------------------------------------------
   constructor TDaveCADSheet.create;
   begin
     inherited create;
@@ -51,12 +83,6 @@ implementation
     fAuthor := '';
     fDate := '';
     fMedia := '';
-  end;
-
-  destructor TDaveCADSheet.destroy;
-  begin
-    //nothing yet...
-    inherited destroy;
   end;
 
   //Load a sheet from the DOM element
@@ -79,10 +105,9 @@ implementation
     end;
   end;
 
-  function TDaveCADSheet.getElement: TDOMElement;
-  begin
-    //
-  end;
+  //----------------------------------------------------------------------------
+  // TDaveCADSheetList
+  //----------------------------------------------------------------------------
 
   function TDaveCADSheetList.GetItem(index: LongWord): TDaveCADSheet;
   begin
@@ -110,6 +135,20 @@ implementation
       end;
     end;
     result := nil;
+  end;
+
+  //----------------------------------------------------------------------------
+  // TDaveCADObject
+  //----------------------------------------------------------------------------
+  procedure TDaveCADObject.loadFrom(dcObject: TDOMElement);
+  begin
+    fObjName := dcObject.TextContent;
+    fP1:=point(strtoint(dcObject.GetAttribute('top')), strtoint(dcObject.GetAttribute('left')));
+    if dcObject.hasAttribute('top1') and dcObject.hasAttribute('top1') then
+      fP2:=point(strtoint(dcObject.GetAttribute('top1')), strtoint(dcObject.GetAttribute('left1')));
+
+    fTool:=getDrawTool(dcObject.GetAttribute('tool'));
+    fColour:=getColour(dcObject.GetAttribute('colour'));
   end;
 
 end.

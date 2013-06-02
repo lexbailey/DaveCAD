@@ -124,15 +124,6 @@ type
     procedure changeSheetProps(oldSheetName, newSheetName, newSheetAuthor, newSheetDate, newSheetMedia: string);
   end;
 
-const
-  DRAW_TOOL_PENCIL: integer = 0;
-  DRAW_TOOL_BALLPOINT: integer = 1;
-  DRAW_TOOL_FELT: integer = 2;
-
-  EDIT_TOOL_DRAWFREE: integer = 0;
-  EDIT_TOOL_MOVE: integer = 1;
-  EDIT_TOOL_TEXT: integer = 2;
-
 var
   frmMain: TfrmMain;
   loadedFile: TDaveCadFile;

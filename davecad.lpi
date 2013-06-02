@@ -35,7 +35,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="davecad.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -83,6 +83,11 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="davecad_about"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="davecad_enum.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="davecad_enum"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -9,7 +9,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, davecad_main, davecad_file, davecad_error, davecad_file_parser,
-davecad_renderer, davecad_sheet_properties_form, davecad_about
+davecad_renderer, davecad_sheet_properties_form, davecad_about, davecad_enum
   { you can add units after this };
 
 {$R newFile.rc}
