@@ -302,6 +302,8 @@ begin
       sheets := loadedFile.getSheets;
       //find the selected sheet
       sheet := sheets.sheet[loadedFile.Session.SelectedSheet];
+      //we don't need sheets any more
+      sheets.Free;
       //if the selected sheet doesn't exist then show a warning, this is nearly impossible
       if sheet = nil then begin
         pbDrawText(getErrorMessage(DCAD_WARN_INVALID_SHEET_SELECTED));
@@ -309,11 +311,12 @@ begin
       begin
         //here we can actually draw the sheet
         renderSheet(sheet, pbDrawing.Canvas, pbDrawing.Width, pbDrawing.Height);
+        sheet.Free;
       end;
+
     end;
   end;
-  sheets.Free;
-  sheet.Free;
+
 end;
 
 procedure TfrmMain.sbToolboxResize(Sender: TObject);
@@ -429,10 +432,14 @@ begin
     //clear all old sheets
     tcSheets.Tabs.Clear;
     //Loop through all sheets
-    for i := 0 to sheets.count-1 do begin
-      //add them to the tabs
-      tcSheets.Tabs.Add(sheets.Item[i].Name);
+    if assigned(sheets) then begin
+      for i := 0 to sheets.count-1 do begin
+        //add them to the tabs
+        tcSheets.Tabs.Add(sheets.Item[i].Name);
+      end;
+      sheets.Free;
     end;
+
   end;
 
   if tcSheets.Tabs.IndexOf(loadedFile.Session.SelectedSheet) = -1 then begin
@@ -444,7 +451,7 @@ begin
     end;
   end;
   pbDrawing.Invalidate;
-  sheets.Free;
+
 end;
 
 end.
