@@ -41,9 +41,11 @@ type
       fAuthor: string;
       fDate: string;
       fMedia: string;
+      fObjects: array of TDaveCADObject;
     public
       //This function loads the sheet from the TDOMElemnt named 'sheet'
       procedure loadFrom(sheet: TDOMElement);
+      procedure loadWithObjectFrom(sheet: TDOMElement);
 
       //properties for all loaded attributes
       property Name: string read fName;
@@ -103,6 +105,26 @@ implementation
       if ThisProp.GetAttribute('name') = 'date' then
         fDate := ThisProp.TextContent;
     end;
+    ThisProp.Free;
+  end;
+
+  procedure TDaveCADSheet.loadWithObjectFrom(sheet: TDOMElement);
+  var objects: TDOMNodeList;
+    i: integer;
+    ThisObj: TDOMElement;
+    ThisdcObj: TDaveCADObject;
+  begin
+    loadFrom(sheet);
+    objects := TDOMElement(sheet.FindNode('objects')).GetElementsByTagName('object');
+    for i := 0 to objects.Count-1 do begin
+      ThisObj := TDOMElement(objects.Item[i]);
+      ThisdcObj := TDaveCADObject.Create;
+      ThisdcObj.loadFrom(ThisObj);
+      setLength(fObjects, length(fObjects) +1); //make room!
+      fObjects[length(fObjects)-1] := ThisdcObj;
+    end;
+    ThisdcObj.Free;
+    ThisObj.Free;
   end;
 
   //----------------------------------------------------------------------------

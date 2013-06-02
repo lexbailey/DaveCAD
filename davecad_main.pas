@@ -300,7 +300,7 @@ begin
     fsLoadedValid:begin
       //Get all the sheets in the file
       sheets := loadedFile.getSheets;
-      //fund the selected sheet
+      //find the selected sheet
       sheet := sheets.sheet[loadedFile.Session.SelectedSheet];
       //if the selected sheet doesn't exist then show a warning, this is nearly impossible
       if sheet = nil then begin
@@ -312,7 +312,8 @@ begin
       end;
     end;
   end;
-
+  sheets.Free;
+  sheet.Free;
 end;
 
 procedure TfrmMain.sbToolboxResize(Sender: TObject);
@@ -340,6 +341,7 @@ begin
     callback:=@frmMain.changeSheetProps;
     Show;
   end;
+  sheet.Free;
 end;
 
 procedure TfrmMain.changeSheetProps(oldSheetName, newSheetName, newSheetAuthor, newSheetDate, newSheetMedia: string);
@@ -356,6 +358,8 @@ begin
       loadedFile.updateSheetProps(TDomElement(allSheets.Item[i]), newSheetName, newSheetAuthor, newSheetDate, newSheetMedia);
     end;
   end;
+  oldSheet.Free;
+  allSheets.Free;
   rescan;
 end;
 
@@ -440,6 +444,7 @@ begin
     end;
   end;
   pbDrawing.Invalidate;
+  sheets.Free;
 end;
 
 end.

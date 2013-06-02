@@ -33,7 +33,10 @@ begin
      picture := TPicture.Create;
      picture.LoadFromLazarusResource(sheet.Media);
      canvas.Draw(centreX-round(picture.Width/2),centreY-round(picture.Height/2),picture.Bitmap);
+     picture.Free;
   end;
+  brush.Free;
+
 end;
 
 initialization
