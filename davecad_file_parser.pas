@@ -32,6 +32,8 @@ type
       property point1Y: longint read fP1.y;
       property point2X: longint read fP2.x;
       property point2Y: longint read fP2.y;
+
+      property colour: integer read fColour;
   end;
 
   //Class for loading information about a sheet from a TDaveCADFile.getDOM
@@ -42,6 +44,10 @@ type
       fDate: string;
       fMedia: string;
       fObjects: array of TDaveCADObject;
+
+      function getObject(id: integer): TDaveCADObject;
+      function getObjCount: integer;
+
     public
       //This function loads the sheet from the TDOMElemnt named 'sheet'
       procedure loadFrom(sheet: TDOMElement);
@@ -53,6 +59,10 @@ type
       property Date: string read fDate;
       property Media: string read fMedia;
 
+      //objects
+      property objects[id: integer]: TDaveCADObject read getObject;
+      property objectCount: integer read getObjCount;
+
       //stuff, mostly legal.
       constructor create;
 
@@ -62,6 +72,7 @@ type
   TDaveCADSheetList = class(TObject)
     private
       fItems: array of TDaveCADSheet;
+      fLastSheet: integer;
       function GetItem(index: LongWord): TDaveCADSheet;
       function GetCount: LongWord;
       function GetSheet(name: string): TDaveCADSheet;
@@ -69,7 +80,7 @@ type
       procedure add(sheet: TDaveCADSheet);
       property Item[index: longword]: TDaveCADSheet read GetItem; default;
       property count: LongWord read GetCount;
-
+      property lastSheet: integer read fLastSheet;
       property Sheet[name: string]: TDaveCADSheet read GetSheet;
   end;
 
@@ -109,15 +120,15 @@ implementation
   end;
 
   procedure TDaveCADSheet.loadWithObjectFrom(sheet: TDOMElement);
-  var objects: TDOMNodeList;
+  var mobjects: TDOMNodeList;
     i: integer;
     ThisObj: TDOMElement;
     ThisdcObj: TDaveCADObject;
   begin
     loadFrom(sheet);
-    objects := TDOMElement(sheet.FindNode('objects')).GetElementsByTagName('object');
-    for i := 0 to objects.Count-1 do begin
-      ThisObj := TDOMElement(objects.Item[i]);
+    mobjects := TDOMElement(sheet.FindNode('objects')).GetElementsByTagName('object');
+    for i := 0 to mobjects.Count-1 do begin
+      ThisObj := TDOMElement(mobjects.Item[i]);
       ThisdcObj := TDaveCADObject.Create;
       ThisdcObj.loadFrom(ThisObj);
       setLength(fObjects, length(fObjects) +1); //make room!
@@ -125,6 +136,16 @@ implementation
     end;
     ThisdcObj.Free;
     ThisObj.Free;
+  end;
+
+  function TDaveCADSheet.getObject(id: integer):TDaveCADObject;
+  begin
+    result := fObjects[id];
+  end;
+
+  function TDaveCADSheet.getObjCount: integer;
+  begin
+    result := length(fObjects);
   end;
 
   //----------------------------------------------------------------------------
@@ -150,9 +171,11 @@ implementation
   function TDaveCADSheetList.GetSheet(name: string): TDaveCADSheet;
   var i : integer;
   begin
+    fLastSheet := -1;
     for i := 0 to count-1 do begin
       if getItem(i).fName = name then begin
         result := getItem(i);
+        fLastSheet := i;
         exit;
       end;
     end;
@@ -174,4 +197,5 @@ implementation
   end;
 
 end.
+
 

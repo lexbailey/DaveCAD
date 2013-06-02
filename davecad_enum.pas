@@ -5,12 +5,13 @@ unit davecad_enum;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, Graphics;
 
 
 function getDrawTool(tool: string):integer;
 function getEditTool(tool: string):integer;
 function getColour(colour: string):integer;
+function getTColor(colour: integer):TColor;
 
 const
   DRAW_TOOL_PENCIL: integer = 0;
@@ -55,6 +56,14 @@ begin
   if colour = 'blue' then result := COLOUR_BLUE;
   if colour = 'green' then result := COLOUR_GREEN;
   if colour = 'black' then result := COLOUR_BLACK;
+end;
+
+function getTColor(colour: integer):TColor;
+begin
+  if colour = COLOUR_RED then result := clRed;
+  if colour = COLOUR_BLUE then result := clBlue;
+  if colour = COLOUR_GREEN then result := clGreen;
+  if colour = COLOUR_BLACK then result := clBlack;
 end;
 
 end.

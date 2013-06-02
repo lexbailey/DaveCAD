@@ -287,6 +287,7 @@ end;
 procedure TfrmMain.pbDrawingPaint(Sender: TObject);
 var sheets: TDaveCADSheetList;
   sheet: TDaveCADSheet;
+  tLastSheet: integer;
 begin
   //Decide what to draw!
   case fileState of
@@ -302,6 +303,7 @@ begin
       sheets := loadedFile.getSheets;
       //find the selected sheet
       sheet := sheets.sheet[loadedFile.Session.SelectedSheet];
+      tLastSheet := sheets.lastSheet;
       //we don't need sheets any more
       sheets.Free;
       //if the selected sheet doesn't exist then show a warning, this is nearly impossible
@@ -310,6 +312,9 @@ begin
       end else
       begin
         //here we can actually draw the sheet
+        sheet.free;
+        sheet:=TDaveCADSheet.create;
+        sheet.loadWithObjectFrom(TDOMElement(loadedFile.getDOM.DocumentElement.ChildNodes.Item[tLastSheet]));
         renderSheet(sheet, pbDrawing.Canvas, pbDrawing.Width, pbDrawing.Height);
         sheet.Free;
       end;

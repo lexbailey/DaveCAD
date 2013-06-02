@@ -285,7 +285,7 @@ begin
   for i := 0 to sheets.Count-1 do begin
       sheet := TDaveCADSheet.create;
       sheet.loadFrom(TDOMElement(sheets.Item[i]));
-      if sheet.Name = name_s then //we have out guy
+      if sheet.Name = name_s then //we have our guy
       begin
         fFile.DocumentElement.RemoveChild(sheets.Item[i]);
         result:= 0;
@@ -336,7 +336,6 @@ end;
 
 function TDaveCadFile.getSheets:TDaveCADSheetList;
 var sheets: TDOMNodeList;
-  //sheetList: TDaveCadSheetList;
   sheet: TDaveCADSheet;
   i: integer;
 begin
@@ -344,7 +343,6 @@ begin
   if sheets.Count<=0 then begin
     result := nil;
     sheets.Free;
-
   end else
   begin
     result := TDaveCADSheetList.Create;

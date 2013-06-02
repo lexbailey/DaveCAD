@@ -8,6 +8,7 @@ uses
   Classes, SysUtils, davecad_file_parser, graphics, LResources, davecad_enum;
 
 procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: integer);
+procedure renderObject(obj: TDaveCADObject; canvas: TCanvas);
 
 implementation
 
@@ -16,6 +17,7 @@ var picture: TPicture;
   brush: TBrush;
 
   centreX, centreY: integer;
+  i: integer;
 
 begin
   //get some stuff
@@ -30,13 +32,39 @@ begin
 
   //draw the background for the sheet we are viewing
   if (sheet.Media = RENDER_MEDIA_POST_IT) or (sheet.Media = RENDER_MEDIA_NOTEBOOK_A4) then begin
-     picture := TPicture.Create;
-     picture.LoadFromLazarusResource(sheet.Media);
-     canvas.Draw(centreX-round(picture.Width/2),centreY-round(picture.Height/2),picture.Bitmap);
-     picture.Free;
+    picture := TPicture.Create;
+    picture.LoadFromLazarusResource(sheet.Media);
+    canvas.Draw(centreX-round(picture.Width/2),centreY-round(picture.Height/2),picture.Bitmap);
+    picture.Free;
+
+    for i:= 0 to sheet.objectCount-1 do begin
+      renderObject(sheet.objects[i], canvas);
+    end;
+
+
+  end else
+  begin
+    //show message.
   end;
   brush.Free;
 
+end;
+
+procedure renderObject(obj: TDaveCADObject; canvas: TCanvas);
+var pen: TPen;
+begin
+  //tool dependant pen options
+  pen := TPen.Create;
+  pen.Width:=3;//for now, will change with drawing tool
+  pen.Color:=getTColor(obj.colour);
+
+  //init pen
+  canvas.Pen := pen;
+
+  //if obj.Name = 'line' then begin
+    canvas.MoveTo(obj.point1);
+    canvas.LineTo(obj.point2);
+  //end;
 end;
 
 initialization
@@ -45,4 +73,5 @@ initialization
   {$I notepad-A4.lrs}
 
 end.
+
 
