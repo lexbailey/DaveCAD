@@ -135,9 +135,8 @@ implementation
         if ThisProp.GetAttribute('name') = 'date' then
           fDate := ThisProp.TextContent;
       end;
-      //ThisProp.Free;
     end;
-    properties.Free;
+    //properties.Free;
   end;
 
   procedure TDaveCADSheet.loadWithObjectFrom(sheet: TDOMElement);
@@ -157,7 +156,7 @@ implementation
         fObjects[length(fObjects)-1] := ThisdcObj;
       end;
       ThisdcObj.Free;
-      mobjects.Free;
+      //mobjects.Free;
     end;
   end;
 

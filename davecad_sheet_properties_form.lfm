@@ -2,21 +2,21 @@ object frmSheetProps: TfrmSheetProps
   Left = 330
   Height = 204
   Top = 282
-  Width = 250
+  Width = 247
   BorderStyle = bsToolWindow
   Caption = 'Edit Sheet Properties'
   ClientHeight = 204
-  ClientWidth = 250
+  ClientWidth = 247
   LCLVersion = '1.0.6.0'
   object gbEdit: TGroupBox
     Left = 0
     Height = 204
     Top = 0
-    Width = 250
+    Width = 247
     Align = alClient
     Caption = 'Editing sheet in file...'
     ClientHeight = 186
-    ClientWidth = 246
+    ClientWidth = 243
     TabOrder = 0
     object eName: TLabeledEdit
       Left = 70

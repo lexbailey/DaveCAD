@@ -18,7 +18,7 @@ davecad_renderer, davecad_sheet_properties_form, davecad_about, davecad_enum
 
 begin
   RequireDerivedFormResource := True;
-  SetHeapTraceOutput('heap.trc');
+  //SetHeapTraceOutput('heap.trc');
   Application.Initialize;
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmSheetProps, frmSheetProps);

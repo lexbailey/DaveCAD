@@ -24,8 +24,6 @@ type
     eName: TLabeledEdit;
     Label1: TLabel;
 
-
-
     procedure btnCancelClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);

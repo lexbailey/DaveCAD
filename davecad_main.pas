@@ -119,6 +119,7 @@ type
     { private declarations }
     procedure pbDrawText(pbtext: string);
     procedure pbDrawTextTwoLine(pbtext: string; pbtext2: string);
+    procedure SelectSheet(sheet: string);
     procedure rescan();
   public
     { public declarations }
@@ -177,7 +178,7 @@ end;
 
 procedure TfrmMain.FileOpen1BeforeExecute(Sender: TObject);
 begin
-  FileClose.Execute;
+  FileClose.Execute; //before opening something, close the current file
 end;
 
 procedure TfrmMain.FileSaveAs1Accept(Sender: TObject);
@@ -308,9 +309,6 @@ begin
     fsLoadedValid:begin
       //Get all the sheets in the file
 
-      //sheets := TDaveCADSheetList.Create;
-      //sheets.assign(loadedFile.getSheets);
-
       sheets := loadedFile.getSheets;
 
       //find the selected sheet
@@ -344,25 +342,34 @@ end;
 
 procedure TfrmMain.SheetDeleteExecute(Sender: TObject);
 begin
-  showError(loadedFile.deleteSheet(loadedFile.Session.SelectedSheet));
-  rescan;
+  if ((fileState = fsLoadedValid) or (fileState = fsLoadedValidNoSheet)) and (loadedFile.hasSheets) then begin
+    showError(loadedFile.deleteSheet(loadedFile.Session.SelectedSheet));
+    rescan;
+  end;
 end;
 
 procedure TfrmMain.SheetEditExecute(Sender: TObject);
 var sheet: TDaveCADSheet;
+  sheets: TDaveCADSheetList;
 begin
-  sheet := loadedFile.getSheets.Sheet[loadedFile.Session.SelectedSheet];
-  with frmSheetProps do begin
-    gbEdit.Caption:= 'Editing sheet in file ' + loadedFile.fileName;
-    sheetEdit:=sheet.Name;
-    eName.Text:=sheet.Name;
-    eAuthor.Text:=sheet.Author;
-    eDate.Text:=sheet.Date;
-    cbMedia.ItemIndex:=cbMedia.Items.IndexOf(sheet.Media);
-    callback:=@frmMain.changeSheetProps;
-    Show;
+  if ((fileState = fsLoadedValid) or (fileState = fsLoadedValidNoSheet)) and (loadedFile.hasSheets) then begin
+    sheets := loadedFile.getSheets;
+    sheet := TDaveCADSheet.create;
+    sheet.assign(sheets.Sheet[loadedFile.Session.SelectedSheet]);
+//    sheet := sheets.Sheet[loadedFile.Session.SelectedSheet];
+    sheets.Free;
+    with frmSheetProps do begin
+      gbEdit.Caption:= 'Editing sheet in file ' + loadedFile.fileName;
+      sheetEdit:=sheet.Name;
+      eName.Text:=sheet.Name;
+      eAuthor.Text:=sheet.Author;
+      eDate.Text:=sheet.Date;
+      cbMedia.ItemIndex:=cbMedia.Items.IndexOf(sheet.Media);
+      callback:=@frmMain.changeSheetProps;
+      Show;
+    end;
+    sheet.Free;
   end;
-  sheet.Free;
 end;
 
 procedure TfrmMain.changeSheetProps(oldSheetName, newSheetName, newSheetAuthor, newSheetDate, newSheetMedia: string);
@@ -388,12 +395,25 @@ procedure TfrmMain.SheetNewExecute(Sender: TObject);
 var sheetName: string;
   sheets: TDaveCADSheetList;
 begin
-  sheets := loadedFile.getSheets ;
-  sheetName := 'sheet '+inttostr(sheets.count+1);
-  sheets.Free;
-  loadedFile.addSheet( sheetName, 'post-it', 'User', '');
-  loadedFile.Session.SelectedSheet:=sheetName;
-  rescan;
+  //is a valid file loaded?
+  if (fileState = fsLoadedValid) or (fileState = fsLoadedValidNoSheet) then begin
+    //decide on the name for the sheet
+    if loadedFile.hasSheets then begin
+      //The file has sheets and so "sheet1" might not do it
+      sheets := loadedFile.getSheets ;
+      sheetName := 'sheet '+inttostr(sheets.count+1);
+      sheets.Free;
+    end else
+    begin
+      sheetName := 'sheet1';
+    end;
+    //TODO ensure that sheet name is available.
+    loadedFile.addSheet( sheetName, 'post-it', 'User', '');
+    loadedFile.Session.SelectedSheet:=sheetName;
+    fileState:=fsLoadedValid;
+    rescan;
+    SelectSheet(sheetName);
+  end;
 end;
 
 //Single handler for each group of toolbox items
@@ -442,6 +462,13 @@ begin
     FileOpen1.Dialog.Close;
 end;
 
+procedure TfrmMain.SelectSheet(sheet: string);
+begin
+  //select the right sheet
+  if tcSheets.Tabs.Count >= 1 then
+    tcSheets.TabIndex:=tcSheets.Tabs.IndexOf(sheet);
+end;
+
 procedure TfrmMain.rescan; //Scans the loaded file for sheets and adds them to the tabcontrol
 var sheets: TDaveCadSheetList;
   i: integer;
@@ -450,12 +477,21 @@ var sheets: TDaveCadSheetList;
 begin
   //If a valid file is loaded
   if fileState = fsLoadedValid then begin
-    //Get all sheets from that file
-    sheets := loadedFile.getSheets;
     //clear all old sheets
     tcSheets.Tabs.Clear;
-    //Loop through all sheets
-    if assigned(sheets) then begin
+
+    //if the file has no longer got any sheets...
+    if not loadedFile.hasSheets then begin
+      //set the state to no sheets
+      fileState := fsLoadedValidNoSheet;
+    end else
+    begin
+      //Otherwise, show all sheets
+
+      //Get all sheets from that file
+      sheets := loadedFile.getSheets;
+
+      //Loop through all sheets
       for i := 0 to sheets.count-1 do begin
         //add them to the tabs
         sheet:= sheets.Item[i];
@@ -464,7 +500,6 @@ begin
       end;
       sheets.Free;
     end;
-
   end;
 
   //This should be avoided somehow...

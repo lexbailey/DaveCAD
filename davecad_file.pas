@@ -271,12 +271,13 @@ begin
     sheet := TDaveCADSheet.create;
     sheet.loadFrom(TDOMElement(sheets.Item[i]));
     found := sheet.Name = name_s;
+    sheet.Free;
     if found then //we have our guy
     begin
       fFile.DocumentElement.RemoveChild(sheets.Item[i]);
       result:= 0;
+      break;
     end;
-    sheet.Free;
   end;
   sheets.Free;
   if not found then result := DCAD_WARN_INVALID_SHEET_SELECTED;

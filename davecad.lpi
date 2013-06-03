@@ -73,6 +73,7 @@
         <Filename Value="davecad_sheet_properties_form.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSheetProps"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="davecad_sheet_properties_form"/>
       </Unit6>
