@@ -258,22 +258,6 @@ begin
 
     fFile.DocumentElement.AppendChild(sheet);
     modify;
-
-    //<sillyjoke>
-    //Storm the bastille! (Pascal was french you know)
-    sheet.Free;
-    properties.Free;
-    objects.Free;
-    name.Free;
-    media.Free;
-    author.Free;
-    date.Free;
-    //I don't know where these prisoners came from
-    name_data.Free;
-    media_data.Free;
-    author_data.Free;
-    date_data.Free;
-    //</sillyjoke>
 end;
 
 function TDaveCadFile.deleteSheet(name_s:string): integer;
