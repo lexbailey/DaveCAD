@@ -264,23 +264,22 @@ function TDaveCadFile.deleteSheet(name_s:string): integer;
 var sheets: TDOMNodeList;
   sheet: TDaveCADSheet;
   i : integer;
+  found : boolean;
 begin
   sheets := fFile.GetElementsByTagName('sheet');
   for i := 0 to sheets.Count-1 do begin
-      sheet := TDaveCADSheet.create;
-      sheet.loadFrom(TDOMElement(sheets.Item[i]));
-      if sheet.Name = name_s then //we have our guy
-      begin
-        fFile.DocumentElement.RemoveChild(sheets.Item[i]);
-        result:= 0;
-        sheet.Free;
-        sheets.Free;
-        exit;
-      end;
+    sheet := TDaveCADSheet.create;
+    sheet.loadFrom(TDOMElement(sheets.Item[i]));
+    found := sheet.Name = name_s;
+    if found then //we have our guy
+    begin
+      fFile.DocumentElement.RemoveChild(sheets.Item[i]);
+      result:= 0;
+    end;
+    sheet.Free;
   end;
-  sheet.Free;
   sheets.Free;
-  result := DCAD_WARN_INVALID_SHEET_SELECTED;
+  if not found then result := DCAD_WARN_INVALID_SHEET_SELECTED;
 end;
 
 procedure TDaveCadFile.updateSheetProps(sheet: TDOMElement; newname, newAuthor, newDate, newMedia: string);
@@ -302,7 +301,7 @@ begin
     end;
   modify;
   properties.Free;
-  ThisProp.Free;
+  //ThisProp.Free;
 end;
 
 function TDaveCadFile.getDOM:TXMLDocument;
@@ -326,7 +325,6 @@ begin
   sheets := fFile.GetElementsByTagName('sheet');
   if sheets.Count<=0 then begin
     result := nil;
-    sheets.Free;
   end else
   begin
     result := TDaveCADSheetList.Create;
@@ -334,9 +332,10 @@ begin
         sheet := TDaveCADSheet.create;
         sheet.loadFrom(TDOMElement(sheets.Item[i]));
         result.add(sheet);
+        sheet.free;
     end;
-    sheets.Free;
   end;
+  sheets.free;
 end;
 
 end.

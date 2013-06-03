@@ -5,7 +5,7 @@ unit davecad_file_parser;
 interface
 
 uses
-  Classes, SysUtils, laz2_DOM, davecad_enum;
+  Classes, SysUtils, laz2_DOM, davecad_enum, dialogs;
 
 type
 
@@ -52,6 +52,8 @@ type
       //This function loads the sheet from the TDOMElemnt named 'sheet'
       procedure loadFrom(sheet: TDOMElement);
       procedure loadWithObjectFrom(sheet: TDOMElement);
+      procedure assign(sheet: TDaveCADSheet);
+      procedure assignWithObjects(sheet: TDaveCADSheet);
 
       //properties for all loaded attributes
       property Name: string read fName;
@@ -65,6 +67,7 @@ type
 
       //stuff, mostly legal.
       constructor create;
+      destructor destroy; override;
 
   end;
 
@@ -78,10 +81,14 @@ type
       function GetSheet(name: string): TDaveCADSheet;
     public
       procedure add(sheet: TDaveCADSheet);
+      procedure assign(list: TDaveCADSheetList);
+
       property Item[index: longword]: TDaveCADSheet read GetItem; default;
       property count: LongWord read GetCount;
       property lastSheet: integer read fLastSheet;
       property Sheet[name: string]: TDaveCADSheet read GetSheet;
+
+      destructor destroy; override;
   end;
 
 implementation
@@ -96,6 +103,17 @@ implementation
     fAuthor := '';
     fDate := '';
     fMedia := '';
+  end;
+
+  destructor TDaveCADSheet.destroy;
+  var olength, i: integer;
+  begin
+    olength := length(fObjects);
+    for i := 0 to olength-1 do begin
+      fObjects[i].Free;
+    end;
+    setLength(fObjects, 0);
+    inherited destroy;
   end;
 
   //Load a sheet from the DOM element
@@ -119,6 +137,7 @@ implementation
       end;
       //ThisProp.Free;
     end;
+    properties.Free;
   end;
 
   procedure TDaveCADSheet.loadWithObjectFrom(sheet: TDOMElement);
@@ -138,7 +157,7 @@ implementation
         fObjects[length(fObjects)-1] := ThisdcObj;
       end;
       ThisdcObj.Free;
-      //ThisObj.Free;
+      mobjects.Free;
     end;
   end;
 
@@ -150,6 +169,20 @@ implementation
   function TDaveCADSheet.getObjCount: integer;
   begin
     result := length(fObjects);
+  end;
+
+  procedure TDaveCADSheet.assign(sheet: TDaveCADSheet);
+  begin
+    fName:= sheet.Name;
+    fAuthor:= sheet.Author;
+    fDate:= sheet.Date;
+    fMedia:= sheet.Media;
+  end;
+
+  procedure TDaveCADSheet.assignWithObjects(sheet: TDaveCADSheet);
+  begin
+    assign(sheet);
+    //TODO
   end;
 
   //----------------------------------------------------------------------------
@@ -169,7 +202,20 @@ implementation
   procedure TDaveCADSheetList.add(sheet: TDaveCADSheet);
   begin
     setLength(fItems, Length(fItems)+1); //increase array size
-    fItems[Length(fItems)-1] := sheet; //add in this sheet
+
+    fItems[Length(fItems)-1] := TDaveCADSheet.create;
+    fItems[Length(fItems)-1].assign(sheet);
+  end;
+
+  procedure TDaveCADSheetList.assign(list: TDaveCADSheetList);
+  var i : integer;
+  begin
+    fLastSheet:=list.lastSheet;
+    setLength(fItems, list.count);
+    for i := 0 to list.count-1 do begin
+      fItems[i] := TDaveCADSheet.create;
+      fItems[i].assign(list[i]);
+    end;
   end;
 
   function TDaveCADSheetList.GetSheet(name: string): TDaveCADSheet;
@@ -184,6 +230,15 @@ implementation
       end;
     end;
     result := nil;
+  end;
+
+  destructor TDaveCADSheetList.destroy;
+  var i: integer;
+  begin
+    for i := 0 to count-1 do begin
+      fItems[i].Free;
+    end;
+    inherited destroy;
   end;
 
   //----------------------------------------------------------------------------

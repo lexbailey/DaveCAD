@@ -14,12 +14,14 @@ type
     fHead: string;
     public
       constructor create;
+      destructor destroy; override;
       function isEmpty: boolean;
       procedure setHead(head: string);
       procedure addMessage(m: string);
       procedure showMessages;
       procedure showMessages(dType: TMsgDlgType);
       procedure clear;
+
   end;
 
   procedure showError(errorNum: integer);
@@ -53,6 +55,12 @@ implementation
     inherited create;
     fIsEmpty := true;
     fList := TStringList.Create;
+  end;
+
+  destructor TDaveCadMessageList.destroy;
+  begin
+    fList.Free;
+    inherited destroy;
   end;
 
   procedure TDaveCadMessageList.addMessage(m: string);

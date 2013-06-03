@@ -103,6 +103,7 @@ type
     procedure FileSaveExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure pbDrawingPaint(Sender: TObject);
     procedure sbToolboxResize(Sender: TObject);
     procedure SheetDeleteExecute(Sender: TObject);
@@ -262,6 +263,12 @@ begin
   edittingTool := 0;
 end;
 
+procedure TfrmMain.FormDestroy(Sender: TObject);
+begin
+  loadedFile.Free;
+  errors.Free;
+end;
+
 procedure TfrmMain.pbDrawText(pbtext: string);
 var
   pbtop, pbleft: integer;
@@ -300,9 +307,15 @@ begin
     //Otherwise, the file can be displayed using the current sheet.
     fsLoadedValid:begin
       //Get all the sheets in the file
+
+      //sheets := TDaveCADSheetList.Create;
+      //sheets.assign(loadedFile.getSheets);
+
       sheets := loadedFile.getSheets;
+
       //find the selected sheet
-      sheet := sheets.sheet[loadedFile.Session.SelectedSheet];
+      sheet := TDaveCADSheet.create;
+      sheet.assign(sheets.sheet[loadedFile.Session.SelectedSheet]);
       tLastSheet := sheets.lastSheet;
       //we don't need sheets any more
       sheets.Free;
@@ -367,14 +380,17 @@ begin
     end;
   end;
   oldSheet.Free;
-//  allSheets.Free;
+  allSheets.Free;
   rescan;
 end;
 
 procedure TfrmMain.SheetNewExecute(Sender: TObject);
 var sheetName: string;
+  sheets: TDaveCADSheetList;
 begin
-  sheetName := 'sheet '+inttostr(loadedFile.getSheets.count+1);
+  sheets := loadedFile.getSheets ;
+  sheetName := 'sheet '+inttostr(sheets.count+1);
+  sheets.Free;
   loadedFile.addSheet( sheetName, 'post-it', 'User', '');
   loadedFile.Session.SelectedSheet:=sheetName;
   rescan;
@@ -429,6 +445,8 @@ end;
 procedure TfrmMain.rescan; //Scans the loaded file for sheets and adds them to the tabcontrol
 var sheets: TDaveCadSheetList;
   i: integer;
+  mname: string;
+  sheet: TDaveCADSheet;
 begin
   //If a valid file is loaded
   if fileState = fsLoadedValid then begin
@@ -440,21 +458,30 @@ begin
     if assigned(sheets) then begin
       for i := 0 to sheets.count-1 do begin
         //add them to the tabs
-        tcSheets.Tabs.Add(sheets.Item[i].Name);
+        sheet:= sheets.Item[i];
+        mname := sheet.Name;
+        tcSheets.Tabs.Add(mname);
       end;
       sheets.Free;
     end;
 
   end;
 
+  //This should be avoided somehow...
+  //If we can't find the selected sheet...
   if tcSheets.Tabs.IndexOf(loadedFile.Session.SelectedSheet) = -1 then begin
+    //but we do have a selection of sheets available in the tabs...
     if tcSheets.Tabs.Count >= 1 then begin
+      //set the selected sheet to the first tab!
       loadedFile.Session.SelectedSheet:=tcSheets.Tabs.Strings[0];
     end else
     begin
+      //if we don't have any tabs, clear it.
       loadedFile.Session.SelectedSheet:='';
     end;
   end;
+
+  //force redraw
   pbDrawing.Invalidate;
 
 end;

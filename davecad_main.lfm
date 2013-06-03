@@ -9,6 +9,7 @@ object frmMain: TfrmMain
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   LCLVersion = '1.0.6.0'
   object Status: TStatusBar
     Left = 0

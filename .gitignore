@@ -10,3 +10,6 @@ lib/
 
 #exclude executable output in windows
 *.exe
+
+#for ignoring heap trace files
+heap.trc
