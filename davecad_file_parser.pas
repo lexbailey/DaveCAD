@@ -105,18 +105,20 @@ implementation
     ThisProp: TDOMElement;
   begin
     properties := TDOMElement(sheet.FindNode('properties')).GetElementsByTagName('property');
-    for i := 0 to properties.Count-1 do begin
-      ThisProp := TDOMElement(properties.Item[i]);
-      if ThisProp.GetAttribute('name') = 'sheet-name' then
-        fName := ThisProp.TextContent;
-      if ThisProp.GetAttribute('name') = 'author' then
-        fAuthor := ThisProp.TextContent;
-      if ThisProp.GetAttribute('name') = 'media' then
-        fMedia := ThisProp.TextContent;
-      if ThisProp.GetAttribute('name') = 'date' then
-        fDate := ThisProp.TextContent;
+    if properties.Count >=1 then begin
+      for i := 0 to properties.Count-1 do begin
+        ThisProp := TDOMElement(properties.Item[i]);
+        if ThisProp.GetAttribute('name') = 'sheet-name' then
+          fName := ThisProp.TextContent;
+        if ThisProp.GetAttribute('name') = 'author' then
+          fAuthor := ThisProp.TextContent;
+        if ThisProp.GetAttribute('name') = 'media' then
+          fMedia := ThisProp.TextContent;
+        if ThisProp.GetAttribute('name') = 'date' then
+          fDate := ThisProp.TextContent;
+      end;
+      ThisProp.Free;
     end;
-    ThisProp.Free;
   end;
 
   procedure TDaveCADSheet.loadWithObjectFrom(sheet: TDOMElement);
@@ -127,15 +129,17 @@ implementation
   begin
     loadFrom(sheet);
     mobjects := TDOMElement(sheet.FindNode('objects')).GetElementsByTagName('object');
-    for i := 0 to mobjects.Count-1 do begin
-      ThisObj := TDOMElement(mobjects.Item[i]);
-      ThisdcObj := TDaveCADObject.Create;
-      ThisdcObj.loadFrom(ThisObj);
-      setLength(fObjects, length(fObjects) +1); //make room!
-      fObjects[length(fObjects)-1] := ThisdcObj;
+    if mobjects.Count >= 1 then begin
+      for i := 0 to mobjects.Count-1 do begin
+        ThisObj := TDOMElement(mobjects.Item[i]);
+        ThisdcObj := TDaveCADObject.Create;
+        ThisdcObj.loadFrom(ThisObj);
+        setLength(fObjects, length(fObjects) +1); //make room!
+        fObjects[length(fObjects)-1] := ThisdcObj;
+      end;
+      ThisdcObj.Free;
+      ThisObj.Free;
     end;
-    ThisdcObj.Free;
-    ThisObj.Free;
   end;
 
   function TDaveCADSheet.getObject(id: integer):TDaveCADObject;

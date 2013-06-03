@@ -37,10 +37,10 @@ begin
     canvas.Draw(centreX-round(picture.Width/2),centreY-round(picture.Height/2),picture.Bitmap);
     picture.Free;
 
-    for i:= 0 to sheet.objectCount-1 do begin
+  {  for i:= 0 to sheet.objectCount-1 do begin
       renderObject(sheet.objects[i], canvas);
     end;
-
+   }
 
   end else
   begin
@@ -61,10 +61,10 @@ begin
   //init pen
   canvas.Pen := pen;
 
-  //if obj.Name = 'line' then begin
+  if obj.Name = 'line' then begin
     canvas.MoveTo(obj.point1);
     canvas.LineTo(obj.point2);
-  //end;
+  end;
 end;
 
 initialization
