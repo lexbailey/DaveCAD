@@ -22,7 +22,7 @@
   <sheet>
     <properties>
       <property name="media">post-it</property>
-      <property name="sheet-name">test</property>
+      <property name="sheet-name">sheet1</property>
       <property name="author">User</property>
       <property name="date">00/00/00</property>
     </properties>
@@ -34,6 +34,32 @@
       <property name="media">post-it</property>
       <property name="author">User</property>
       <property name="date"></property>
+    </properties>
+    <objects/>
+  </sheet>
+  <sheet>
+    <properties>
+      <property name="sheet-name">sheet 3</property>
+      <property name="media">post-it</property>
+      <property name="author">User</property>
+      <property name="date"></property>
+    </properties>
+    <objects/>
+  </sheet>
+  <sheet>
+    <properties>
+      <property name="sheet-name">sheet 4</property>
+      <property name="media">post-it</property>
+      <property name="author">User</property>
+      <property name="date"></property>
+    </properties>
+    <objects/>
+  </sheet>
+  <sheet>
+    <properties>
+      <property name="sheet-name">sheet 5</property>
+      <property name="media">notepad-A4</property>
+      <property name="author">User</property>
     </properties>
     <objects/>
   </sheet>

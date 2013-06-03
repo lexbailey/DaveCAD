@@ -117,7 +117,7 @@ implementation
         if ThisProp.GetAttribute('name') = 'date' then
           fDate := ThisProp.TextContent;
       end;
-      ThisProp.Free;
+      //ThisProp.Free;
     end;
   end;
 
@@ -138,7 +138,7 @@ implementation
         fObjects[length(fObjects)-1] := ThisdcObj;
       end;
       ThisdcObj.Free;
-      ThisObj.Free;
+      //ThisObj.Free;
     end;
   end;
 

@@ -358,7 +358,7 @@ var oldSheet: TDaveCADSheet;
   i: integer;
 begin
   oldSheet := TDaveCADSheet.create;
-  allSheets :=loadedFile.getDOM.DocumentElement.GetElementsByTagName('sheet');
+  allSheets :=loadedFile.getDOM.GetElementsByTagName('sheet');
   for i := 0 to allSheets.Count-1 do begin;
     oldSheet.loadFrom(TDOMElement(allSheets.Item[i]));
     if oldSheet.Name = oldSheetName then //we have our guy
@@ -367,7 +367,7 @@ begin
     end;
   end;
   oldSheet.Free;
-  allSheets.Free;
+//  allSheets.Free;
   rescan;
 end;
 

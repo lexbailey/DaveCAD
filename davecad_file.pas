@@ -218,7 +218,7 @@ end;
 procedure TDaveCadFile.newFileName(name: string);
 begin
     fFileName:=name;
-    //file modified
+    modify;
 end;
 
 //This function adds a sheet to the currently loaded file.
@@ -265,7 +265,7 @@ var sheets: TDOMNodeList;
   sheet: TDaveCADSheet;
   i : integer;
 begin
-  sheets := fFile.DocumentElement.GetElementsByTagName('sheet');
+  sheets := fFile.GetElementsByTagName('sheet');
   for i := 0 to sheets.Count-1 do begin
       sheet := TDaveCADSheet.create;
       sheet.loadFrom(TDOMElement(sheets.Item[i]));
@@ -313,7 +313,7 @@ end;
 function TDaveCadFile.hasSheets:boolean;
 var sheets: TDOMNodeList;
 begin
-  sheets := fFile.DocumentElement.GetElementsByTagName('sheet');
+  sheets := fFile.GetElementsByTagName('sheet');
   result := sheets.Count >= 1;
   sheets.Free;
 end;
@@ -323,7 +323,7 @@ var sheets: TDOMNodeList;
   sheet: TDaveCADSheet;
   i: integer;
 begin
-  sheets := fFile.DocumentElement.GetElementsByTagName('sheet');
+  sheets := fFile.GetElementsByTagName('sheet');
   if sheets.Count<=0 then begin
     result := nil;
     sheets.Free;
