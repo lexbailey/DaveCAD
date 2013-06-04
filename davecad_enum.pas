@@ -12,6 +12,7 @@ function getDrawTool(tool: string):integer;
 function drawToolName(tool: integer):string;
 function getEditTool(tool: string):integer;
 function getColour(colour: string):integer;
+function colourName(colour: integer):string;
 function getTColor(colour: integer):TColor;
 
 const
@@ -65,6 +66,14 @@ begin
   if colour = 'blue' then result := COLOUR_BLUE;
   if colour = 'green' then result := COLOUR_GREEN;
   if colour = 'black' then result := COLOUR_BLACK;
+end;
+
+function colourName(colour: integer):string;
+begin
+  if colour = COLOUR_RED then result := 'red';
+  if colour = COLOUR_BLUE then result := 'blue';
+  if colour = COLOUR_GREEN then result := 'green';
+  if colour = COLOUR_BLACK then result := 'black';
 end;
 
 function getTColor(colour: integer):TColor;

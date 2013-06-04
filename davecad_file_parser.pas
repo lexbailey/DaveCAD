@@ -246,9 +246,9 @@ implementation
   procedure TDaveCADObject.loadFrom(dcObject: TDOMElement);
   begin
     fObjName := dcObject.TextContent;
-    fP1:=point(strtoint(dcObject.GetAttribute('top')), strtoint(dcObject.GetAttribute('left')));
-    if dcObject.hasAttribute('top1') and dcObject.hasAttribute('top1') then
-      fP2:=point(strtoint(dcObject.GetAttribute('top1')), strtoint(dcObject.GetAttribute('left1')));
+    fP1:=point(strtoint(dcObject.GetAttribute('left')), strtoint(dcObject.GetAttribute('top')));
+    if dcObject.hasAttribute('top1') and dcObject.hasAttribute('left1') then
+      fP2:=point(strtoint(dcObject.GetAttribute('left1')), strtoint(dcObject.GetAttribute('top1')));
 
     fTool:=getDrawTool(dcObject.GetAttribute('tool'));
     fColour:=getColour(dcObject.GetAttribute('colour'));

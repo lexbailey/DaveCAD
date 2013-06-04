@@ -9,6 +9,7 @@ uses
 
 procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: integer);
 procedure renderObject(obj: TDaveCADObject; canvas: TCanvas; startX, startY: integer);
+function getOrigin(sheet: TDaveCADSheet; cwidth, cheight: integer): TPoint;
 
 implementation
 
@@ -80,6 +81,33 @@ begin
   end;
 
   pen.Free;
+end;
+
+function getOrigin(sheet: TDaveCADSheet; cwidth, cheight: integer): TPoint;
+var picture: TPicture;
+  brush: TBrush;
+
+  centreX, centreY: integer;
+  startX, startY: integer;
+  i: integer;
+
+begin
+  //get some stuff
+  centreX := round(cwidth/2);
+  centreY := round(cheight/2);
+
+  startX := 0;
+  startY := 0;
+
+  //blah blah etc...
+  if (sheet.Media = RENDER_MEDIA_POST_IT) or (sheet.Media = RENDER_MEDIA_NOTEBOOK_A4) then begin
+    picture := TPicture.Create;
+    picture.LoadFromLazarusResource(sheet.Media);
+    startX := centreX-round(picture.Width/2);
+    startY := centreY-round(picture.Height/2);
+    picture.Free;
+  end;
+  result := point(startX, startY);
 end;
 
 initialization

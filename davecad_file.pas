@@ -7,7 +7,8 @@ unit davecad_file;
 interface
 
 uses
-  Classes, SysUtils, laz2_XMLRead, laz2_DOM, davecad_error, laz2_XMLWrite, davecad_file_parser, dialogs, LResources;
+  Classes, SysUtils, laz2_XMLRead, laz2_DOM, davecad_error, laz2_XMLWrite,
+  davecad_file_parser, dialogs, LResources, davecad_renderer;
 
   type
 
@@ -60,7 +61,7 @@ uses
         function deleteSheet(name_s: string): integer;
         procedure updateSheetProps(sheet: TDOMElement; newname, newAuthor, newDate, newMedia: string);
 
-        procedure addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer);
+        procedure addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer; origin: TPoint);
         //function deleteObject(sheetName: string; objectID: integer): integer;
         //procedure updateObjectProps(sheet: string; objectID: integer; new...: string);
 
@@ -268,22 +269,25 @@ begin
 end;
 
 //This function adds a sheet to the currently loaded file.
-procedure TDaveCadFile.addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer);
-var sheet, dcObject: TDOMElement;
+procedure TDaveCadFile.addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer; origin: TPoint);
+var sheet, dcObject, objects: TDOMElement;
+  objectsnode: TDOMNode;
 begin
   //find the sheet
   sheet := TDOMElement(getSheet(sheetName));
     dcObject := fFile.CreateElement('object');
     dcObject.SetAttribute('tool', tool);
     if colour <> '' then dcObject.SetAttribute('colour', colour);
-    dcObject.SetAttribute('top1', inttostr(originY));
-    dcObject.SetAttribute('left1', inttostr(originX));
-    dcObject.SetAttribute('top2', inttostr(lastY));
-    dcObject.SetAttribute('left2', inttostr(lastX));
+    dcObject.SetAttribute('top', inttostr(originY-origin.y));
+    dcObject.SetAttribute('left', inttostr(originX-origin.x));
+    dcObject.SetAttribute('top1', inttostr(lastY-origin.y));
+    dcObject.SetAttribute('left1', inttostr(lastX-origin.x));
 
     dcObject.AppendChild(fFile.CreateTextNode(objType));
 
-    sheet.FindNode('objects').AppendChild(dcObject);
+    objectsNode := sheet.FindNode('objects');
+    objects := TDOMElement(objectsNode);
+    objects.AppendChild(dcObject);
     modify;
 end;
 

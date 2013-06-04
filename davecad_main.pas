@@ -20,9 +20,11 @@ type
     actAbout: TAction;
     ilDrawTools: TImageList;
     ilEditTools: TImageList;
+    ilColours: TImageList;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    Label4: TLabel;
     miEditSheet: TMenuItem;
     miDeleteSheet: TMenuItem;
     miNewSheet: TMenuItem;
@@ -78,6 +80,7 @@ type
     tcSheets: TTabControl;
     ToolBar1: TToolBar;
     tbEditTool: TToolBar;
+    tbColours: TToolBar;
     ToolBar3: TToolBar;
     tbNew: TToolButton;
     tbOpen: TToolButton;
@@ -94,6 +97,10 @@ type
     tbDeleteSheet: TToolButton;
     tbEditSheet: TToolButton;
     tbLine: TToolButton;
+    tbRed: TToolButton;
+    tbBlue: TToolButton;
+    tbGreen: TToolButton;
+    tbBlack: TToolButton;
     tpBallPoint: TToolButton;
     procedure actAboutExecute(Sender: TObject);
     procedure FileCloseExecute(Sender: TObject);
@@ -121,6 +128,7 @@ type
     procedure tbEditingToolClick(Sender: TObject);
     procedure hintMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer
       );
+    procedure tbColourClick(Sender: TObject);
     procedure tcSheetsChange(Sender: TObject);
     procedure TOpenDialogShow(Sender: TObject);
   private
@@ -140,8 +148,10 @@ var
   errors: TDaveCadMessageList;
   fileState: TFileState;
   fileWasSaved: boolean;
+
   drawingTool : integer;
   edittingTool : integer;
+  selectedColour: integer;
 
   mouseIsDown, doTool: boolean;
   firstX, firstY: integer;
@@ -310,11 +320,15 @@ end;
 
 procedure TfrmMain.pbDrawingMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
+var sheet: TDaveCADSheet;
 begin
   if mouseIsDown and doTool then begin
     case edittingTool of
       EDIT_TOOL_LINE: begin //draw freehand
-        loadedFile.addObject('line', drawToolName(drawingTool), loadedFile.Session.SelectedSheet, 'red', firstX, firstY, X, Y);
+        sheet := TDaveCADSheet.create;
+        sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
+        loadedFile.addObject('line', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height));
+        sheet.Free;
       end;
     end;
     pbDrawing.Invalidate;
@@ -487,6 +501,16 @@ procedure TfrmMain.hintMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
   Status.Panels[0].Text := TControl(sender).Hint;
+end;
+
+procedure TfrmMain.tbColourClick(Sender: TObject);
+var i : integer;
+begin
+  for i := 0 to tbColours.ButtonCount-1 do begin
+    tbColours.Buttons[i].Down:=false;
+  end;
+  TToolButton(sender).Down:=true;
+  selectedColour := TToolButton(sender).Tag;
 end;
 
 //Similar to avove
