@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, davecad_file_parser, graphics, LResources, davecad_enum;
 
 procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: integer);
-procedure renderObject(obj: TDaveCADObject; canvas: TCanvas);
+procedure renderObject(obj: TDaveCADObject; canvas: TCanvas; startX, startY: integer);
 
 implementation
 
@@ -17,6 +17,7 @@ var picture: TPicture;
   brush: TBrush;
 
   centreX, centreY: integer;
+  startX, startY: integer;
   i: integer;
 
 begin
@@ -32,15 +33,17 @@ begin
 
   //draw the background for the sheet we are viewing
   if (sheet.Media = RENDER_MEDIA_POST_IT) or (sheet.Media = RENDER_MEDIA_NOTEBOOK_A4) then begin
+    //TODO, move picture section away from draw to speed things up
     picture := TPicture.Create;
     picture.LoadFromLazarusResource(sheet.Media);
-    canvas.Draw(centreX-round(picture.Width/2),centreY-round(picture.Height/2),picture.Bitmap);
+    startX := centreX-round(picture.Width/2);
+    startY := centreY-round(picture.Height/2);
+    canvas.Draw(startX,startY,picture.Bitmap);
     picture.Free;
 
-  {  for i:= 0 to sheet.objectCount-1 do begin
-      renderObject(sheet.objects[i], canvas);
+    for i:= 0 to sheet.objectCount-1 do begin
+      renderObject(sheet.objects[i], canvas, startX, startY);
     end;
-   }
 
   end else
   begin
@@ -50,7 +53,7 @@ begin
 
 end;
 
-procedure renderObject(obj: TDaveCADObject; canvas: TCanvas);
+procedure renderObject(obj: TDaveCADObject; canvas: TCanvas; startX, startY: integer);
 var pen: TPen;
 begin
   //tool dependant pen options
@@ -62,9 +65,11 @@ begin
   canvas.Pen := pen;
 
   if obj.Name = 'line' then begin
-    canvas.MoveTo(obj.point1);
-    canvas.LineTo(obj.point2);
+    canvas.MoveTo(obj.point1X+startX, obj.point1Y+startY);
+    canvas.LineTo(obj.point2X+startX, obj.point2Y+startY);
   end;
+
+  pen.Free;
 end;
 
 initialization

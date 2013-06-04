@@ -155,9 +155,8 @@ implementation
         setLength(fObjects, length(fObjects) +1); //make room!
         fObjects[length(fObjects)-1] := ThisdcObj;
       end;
-      ThisdcObj.Free;
-      //mobjects.Free;
     end;
+    mobjects.Free;
   end;
 
   function TDaveCADSheet.getObject(id: integer):TDaveCADObject;
