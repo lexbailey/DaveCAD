@@ -156,6 +156,8 @@ var
   mouseIsDown, doTool: boolean;
   firstX, firstY: integer;
 
+  tempObj: TDaveCADObject;
+
 implementation
 
 {$R *.lfm}
@@ -289,6 +291,11 @@ procedure TfrmMain.FormDestroy(Sender: TObject);
 begin
   loadedFile.Free;
   errors.Free;
+
+   if assigned(tempObj) then begin
+     tempObj.Free;
+     tempObj := nil;
+   end;
 end;
 
 procedure TfrmMain.pbDrawingMouseDown(Sender: TObject; Button: TMouseButton;
@@ -313,6 +320,17 @@ begin
     case edittingTool of
       EDIT_TOOL_LINE: begin //draw freehand
         doTool := true;
+        if assigned(tempObj) then begin
+          tempObj.Free;
+          tempObj := nil;
+        end;
+        tempObj := TDaveCADObject.Create;
+        tempObj.Name:='line';
+        tempObj.point1 := point(firstX, firstY);
+        tempObj.point2 := point(X, Y);
+        tempObj.colour:=selectedColour;
+        tempObj.tool:=drawingTool;
+        pbDrawing.Invalidate;
       end;
     end;
   end;
@@ -363,6 +381,7 @@ procedure TfrmMain.pbDrawingPaint(Sender: TObject);
 var sheets: TDaveCADSheetList;
   sheet: TDaveCADSheet;
   tLastSheet: integer;
+  //startPoint : TPoint;
 begin
   //Decide what to draw!
   case fileState of
@@ -394,6 +413,12 @@ begin
         sheet:=TDaveCADSheet.create;
         sheet.loadWithObjectFrom(TDOMElement(loadedFile.getDOM.DocumentElement.ChildNodes.Item[tLastSheet]));
         renderSheet(sheet, pbDrawing.Canvas, pbDrawing.Width, pbDrawing.Height);
+        if assigned(tempObj) then begin
+          //startPoint := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height);
+          renderObject(tempObj, pbDrawing.Canvas, 0, 0);
+          tempObj.Free;
+          tempObj := nil;
+        end;
         sheet.Free;
       end;
 

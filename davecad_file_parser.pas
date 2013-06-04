@@ -20,21 +20,40 @@ type
 
       procedure loadFrom(dcObject: TDOMElement);
 
-      property Name: string read fObjName;
-      property Origin: TPoint read fP1;
-      property point1: TPoint read fP1; //alias for origin for using where it makes more sense
-      property point2: TPoint read fP2;
+       property Name: string read fObjName write fObjName;
+      property Origin: TPoint read fP1 write fp1;
+      property point1: TPoint read fP1 write fp1; //alias for origin for using where it makes more sense
+      property point2: TPoint read fP2 write fp2;
 
       //etc...
-      property originX: longint read fP1.x;
-      property originY: longint read fP1.y;
-      property point1X: longint read fP1.x;
-      property point1Y: longint read fP1.y;
-      property point2X: longint read fP2.x;
-      property point2Y: longint read fP2.y;
+      property originX: longint read fP1.x write fP1.x;
+      property originY: longint read fP1.y write fP1.y;
+      property point1X: longint read fP1.x write fP1.x;
+      property point1Y: longint read fP1.y write fP1.y;
+      property point2X: longint read fP2.x write fP2.x;
+      property point2Y: longint read fP2.y write fP2.y;
 
-      property colour: integer read fColour;
-      property tool: integer read fTool;
+      property colour: integer read fColour write fColour;
+      property tool: integer read fTool write fTool;
+  end;
+
+  TDaveCADCustomObject = class(TDaveCADObject)
+    public
+      property Name: string read fObjName write fObjName;
+      property Origin: TPoint read fP1 write fp1;
+      property point1: TPoint read fP1 write fp1; //alias for origin for using where it makes more sense
+      property point2: TPoint read fP2 write fp2;
+
+      //etc...
+      property originX: longint read fP1.x write fP1.x;
+      property originY: longint read fP1.y write fP1.y;
+      property point1X: longint read fP1.x write fP1.x;
+      property point1Y: longint read fP1.y write fP1.y;
+      property point2X: longint read fP2.x write fP2.x;
+      property point2Y: longint read fP2.y write fP2.y;
+
+      property colour: integer read fColour write fColour;
+      property tool: integer read fTool write fTool;
   end;
 
   //Class for loading information about a sheet from a TDaveCADFile.getDOM
