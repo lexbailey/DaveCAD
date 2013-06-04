@@ -52,10 +52,17 @@ uses
         //function for getting validity
         function isValid: boolean;
 
+        //find a sheet
+        function getSheet(name_s:string): TDOMNode;
+
         //functions for adding things to the file, editting or removing them
         procedure addSheet(name_s: string; media_s: string; author_s: string; date_s: string);
         function deleteSheet(name_s: string): integer;
         procedure updateSheetProps(sheet: TDOMElement; newname, newAuthor, newDate, newMedia: string);
+
+        procedure addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer);
+        //function deleteObject(sheetName: string; objectID: integer): integer;
+        //procedure updateObjectProps(sheet: string; objectID: integer; new...: string);
 
         //functions for getting info from the file
         function getDOM:TXMLDocument; //Gets everything
@@ -260,12 +267,69 @@ begin
     modify;
 end;
 
-function TDaveCadFile.deleteSheet(name_s:string): integer;
+//This function adds a sheet to the currently loaded file.
+procedure TDaveCadFile.addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer);
+var sheet, dcObject: TDOMElement;
+begin
+  //find the sheet
+  sheet := TDOMElement(getSheet(sheetName));
+    dcObject := fFile.CreateElement('object');
+    dcObject.SetAttribute('tool', tool);
+    if colour <> '' then dcObject.SetAttribute('colour', colour);
+    dcObject.SetAttribute('top1', inttostr(originY));
+    dcObject.SetAttribute('left1', inttostr(originX));
+    dcObject.SetAttribute('top2', inttostr(lastY));
+    dcObject.SetAttribute('left2', inttostr(lastX));
+
+    dcObject.AppendChild(fFile.CreateTextNode(objType));
+
+    sheet.FindNode('objects').AppendChild(dcObject);
+    modify;
+end;
+
+function TDaveCadFile.getSheet(name_s:string): TDOMNode;
 var sheets: TDOMNodeList;
   sheet: TDaveCADSheet;
   i : integer;
   found : boolean;
 begin
+  sheets := fFile.GetElementsByTagName('sheet');
+  for i := 0 to sheets.Count-1 do begin
+    sheet := TDaveCADSheet.create;
+    sheet.loadFrom(TDOMElement(sheets.Item[i]));
+    found := sheet.Name = name_s;
+    sheet.Free;
+    if found then //we have our guy
+    begin
+      result := sheets.Item[i];
+      break;
+    end;
+  end;
+  sheets.Free;
+  if not found then result := nil;
+end;
+
+function TDaveCadFile.deleteSheet(name_s:string): integer;
+var{ sheets: TDOMNodeList;
+  sheet: TDaveCADSheet;
+  i : integer;
+  found : boolean;
+  }
+  sheet: TDOMNode;
+begin
+
+  sheet := getSheet(name_s);
+
+  if sheet <> nil then begin
+    fFile.DocumentElement.RemoveChild(sheet);
+    result := 0;
+  end else
+  begin
+    result := DCAD_WARN_INVALID_SHEET_SELECTED;
+  end;
+
+
+  {
   sheets := fFile.GetElementsByTagName('sheet');
   for i := 0 to sheets.Count-1 do begin
     sheet := TDaveCADSheet.create;
@@ -280,7 +344,9 @@ begin
     end;
   end;
   sheets.Free;
+
   if not found then result := DCAD_WARN_INVALID_SHEET_SELECTED;
+  }
 end;
 
 procedure TDaveCadFile.updateSheetProps(sheet: TDOMElement; newname, newAuthor, newDate, newMedia: string);

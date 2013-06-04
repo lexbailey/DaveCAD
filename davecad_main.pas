@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
   ActnList, ComCtrls, ExtCtrls, StdCtrls, StdActns, laz2_XMLRead, laz2_DOM,
   davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer,
-  davecad_sheet_properties_form, davecad_about, math;
+  davecad_sheet_properties_form, davecad_about, math, davecad_enum;
 
 type
 
@@ -93,6 +93,7 @@ type
     tbNewSheet: TToolButton;
     tbDeleteSheet: TToolButton;
     tbEditSheet: TToolButton;
+    tbLine: TToolButton;
     tpBallPoint: TToolButton;
     procedure actAboutExecute(Sender: TObject);
     procedure FileCloseExecute(Sender: TObject);
@@ -104,6 +105,13 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure pbDrawingMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pbDrawingMouseLeave(Sender: TObject);
+    procedure pbDrawingMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure pbDrawingMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     procedure pbDrawingPaint(Sender: TObject);
     procedure sbToolboxResize(Sender: TObject);
     procedure SheetDeleteExecute(Sender: TObject);
@@ -134,6 +142,9 @@ var
   fileWasSaved: boolean;
   drawingTool : integer;
   edittingTool : integer;
+
+  mouseIsDown, doTool: boolean;
+  firstX, firstY: integer;
 
 implementation
 
@@ -268,6 +279,48 @@ procedure TfrmMain.FormDestroy(Sender: TObject);
 begin
   loadedFile.Free;
   errors.Free;
+end;
+
+procedure TfrmMain.pbDrawingMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  mouseIsDown := true;
+  firstX := X;
+  firstY := Y;
+end;
+
+procedure TfrmMain.pbDrawingMouseLeave(Sender: TObject);
+begin
+  mouseIsDown:=false;
+  doTool := false;
+end;
+
+procedure TfrmMain.pbDrawingMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  Status.Panels[0].Text := ''; //clear the hint from the status bar
+  if mouseIsDown then begin
+    case edittingTool of
+      EDIT_TOOL_LINE: begin //draw freehand
+        doTool := true;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmMain.pbDrawingMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if mouseIsDown and doTool then begin
+    case edittingTool of
+      EDIT_TOOL_LINE: begin //draw freehand
+        loadedFile.addObject('line', drawToolName(drawingTool), loadedFile.Session.SelectedSheet, 'red', firstX, firstY, X, Y);
+      end;
+    end;
+    pbDrawing.Invalidate;
+  end;
+  mouseIsDown:=false;
+  doTool := false;
 end;
 
 procedure TfrmMain.pbDrawText(pbtext: string);

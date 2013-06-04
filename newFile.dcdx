@@ -12,7 +12,7 @@
 <!ATTLIST property name (media|sheet-name|author|date) #REQUIRED>
 
 <!ATTLIST object tool (ball-point|felt-tip|pencil) #REQUIRED>
-<!ATTLIST object colour (red|black|green|blue) #REQUIRED>
+<!ATTLIST object colour (red|black|green|blue) #IMPLIED>
 <!ATTLIST object top CDATA #REQUIRED>
 <!ATTLIST object left CDATA #REQUIRED>
 <!ATTLIST object top1 CDATA #IMPLIED>

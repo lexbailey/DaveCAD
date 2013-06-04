@@ -9,23 +9,25 @@ uses
 
 
 function getDrawTool(tool: string):integer;
+function drawToolName(tool: integer):string;
 function getEditTool(tool: string):integer;
 function getColour(colour: string):integer;
 function getTColor(colour: integer):TColor;
 
 const
-  DRAW_TOOL_PENCIL: integer = 0;
-  DRAW_TOOL_BALLPOINT: integer = 1;
-  DRAW_TOOL_FELT: integer = 2;
+  DRAW_TOOL_PENCIL = 0;
+  DRAW_TOOL_BALLPOINT = 1;
+  DRAW_TOOL_FELT = 2;
 
-  EDIT_TOOL_DRAWFREE: integer = 0;
-  EDIT_TOOL_MOVE: integer = 1;
-  EDIT_TOOL_TEXT: integer = 2;
+  EDIT_TOOL_DRAWFREE = 0;
+  EDIT_TOOL_MOVE = 1;
+  EDIT_TOOL_TEXT = 2;
+  EDIT_TOOL_LINE = 3;
 
-  COLOUR_RED: integer = 0;
-  COLOUR_BLUE: integer = 1;
-  COLOUR_GREEN: integer = 2;
-  COLOUR_BLACK: integer = 3;
+  COLOUR_RED = 0;
+  COLOUR_BLUE = 1;
+  COLOUR_GREEN = 2;
+  COLOUR_BLACK = 3;
 
   RENDER_MEDIA_POST_IT = 'post-it';
   RENDER_MEDIA_NOTEBOOK_A4 = 'notepad-A4';
@@ -41,6 +43,13 @@ begin
   if tool = 'pencil' then result := DRAW_TOOL_PENCIL;
   if tool = 'ball-point' then result := DRAW_TOOL_BALLPOINT;
   if tool = 'felt-tip' then result := DRAW_TOOL_FELT;
+end;
+
+function drawToolName(tool: integer):string;
+begin
+  if tool = DRAW_TOOL_PENCIL then result := 'pencil';
+  if tool = DRAW_TOOL_BALLPOINT then result := 'ball-point';
+  if tool = DRAW_TOOL_FELT then result := 'felt-tip';
 end;
 
 function getEditTool(tool: string):integer;

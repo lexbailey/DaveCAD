@@ -34,6 +34,7 @@ type
       property point2Y: longint read fP2.y;
 
       property colour: integer read fColour;
+      property tool: integer read fTool;
   end;
 
   //Class for loading information about a sheet from a TDaveCADFile.getDOM

@@ -58,8 +58,18 @@ var pen: TPen;
 begin
   //tool dependant pen options
   pen := TPen.Create;
-  pen.Width:=3;//for now, will change with drawing tool
-  pen.Color:=getTColor(obj.colour);
+  case obj.tool of
+    DRAW_TOOL_PENCIL: pen.Width:=2;
+    DRAW_TOOL_BALLPOINT: pen.Width:=3;
+    DRAW_TOOL_FELT: pen.Width:=5;
+  end;
+
+  if obj.tool <> DRAW_TOOL_PENCIL then begin //pencil doesn't have a colour, it is always grey
+    pen.Color:=getTColor(obj.colour);
+  end else
+  begin
+    pen.Color:=clGray;
+  end;
 
   //init pen
   canvas.Pen := pen;

@@ -12,7 +12,7 @@
 <!ATTLIST property name (media|sheet-name|author|date) #REQUIRED>
 
 <!ATTLIST object tool (ball-point|felt-tip|pencil) #REQUIRED>
-<!ATTLIST object colour (red|black|green|blue) #REQUIRED>
+<!ATTLIST object colour (red|black|green|blue) #IMPLIED>
 <!ATTLIST object top CDATA #REQUIRED>
 <!ATTLIST object left CDATA #REQUIRED>
 <!ATTLIST object top1 CDATA #IMPLIED>
@@ -38,7 +38,9 @@
       <property name="date">29/05/13</property>
     </properties>
     <objects>
-      <object tool="ball-point" colour="red" top="0" left="0" top1="20" left1="20">line</object>
+      <object tool="ball-point" colour="red" top="0" left="20" top1="200" left1="20">line</object>
+	  <object tool="pencil" top="0" left="40" top1="200" left1="40">line</object>
+	  <object tool="felt-tip" colour="red" top="0" left="60" top1="200" left1="60">line</object>
     </objects>
   </sheet>
 </DaveCADDrawing>
