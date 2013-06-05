@@ -385,6 +385,15 @@ begin
 
         sheet.free;
       end;
+      EDIT_TOOL_DRAWFREE: begin
+        sheet := TDaveCADSheet.create;
+        sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
+        loadedFile.addObject('line', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale));
+        firstX := X;
+        firstY := Y;
+        sheet.Free;
+        pbDrawing.Invalidate;
+      end;
     end;
   end;
 end;
