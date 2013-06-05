@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!DOCTYPE DaveCADDrawing [
+<!ELEMENT DaveCADDrawing (sheet+)>
+<!ELEMENT sheet (properties, objects)>
+<!ELEMENT properties (property*)>
+<!ELEMENT objects (object*)>
+
+<!ELEMENT property (#PCDATA)>
+<!ELEMENT object (#PCDATA)>
+
+<!ATTLIST DaveCADDrawing file-version CDATA #REQUIRED>
+<!ATTLIST property name (media|sheet-name|author|date) #REQUIRED>
+
+<!ATTLIST object tool (ball-point|felt-tip|pencil) #REQUIRED>
+<!ATTLIST object colour (red|black|green|blue) #IMPLIED>
+<!ATTLIST object top CDATA #REQUIRED>
+<!ATTLIST object left CDATA #REQUIRED>
+<!ATTLIST object top1 CDATA #IMPLIED>
+<!ATTLIST object left1 CDATA #IMPLIED>
+]>
+<DaveCADDrawing file-version="0.1">
+  <sheet>
+    <properties>
+      <property name="media">post-it</property>
+      <property name="sheet-name">sheet1</property>
+      <property name="author">User</property>
+      <property name="date">00/00/00</property>
+    </properties>
+    <objects>
+      <object tool="felt-tip" colour="black" top="62" left="56" top1="228" left1="169">line</object>
+      <object tool="felt-tip" colour="black" top="68" left="231" top1="208" left1="42">line</object>
+      <object tool="felt-tip" colour="black" top="234" left="104" top1="67" left1="131">line</object>
+      <object tool="felt-tip" colour="black" top="127" left="23" top1="183" left1="232">line</object>
+      <object tool="felt-tip" colour="black" top="69" left="230" top1="67" left1="131">line</object>
+      <object tool="felt-tip" colour="black" top="67" left="131" top1="58" left1="56">line</object>
+      <object tool="felt-tip" colour="black" top="58" left="56" top1="125" left1="21">line</object>
+      <object tool="felt-tip" colour="black" top="125" left="21" top1="206" left1="41">line</object>
+      <object tool="felt-tip" colour="black" top="206" left="41" top1="234" left1="101">line</object>
+      <object tool="felt-tip" colour="black" top="234" left="101" top1="231" left1="165">line</object>
+      <object tool="felt-tip" colour="black" top="231" left="165" top1="185" left1="230">line</object>
+      <object tool="felt-tip" colour="black" top="185" left="230" top1="65" left1="230">line</object>
+      <object tool="felt-tip" colour="black" top="91" left="199" top1="87" left1="128">line</object>
+      <object tool="felt-tip" colour="black" top="87" left="128" top1="90" left1="76">line</object>
+      <object tool="felt-tip" colour="black" top="90" left="76" top1="133" left1="38">line</object>
+      <object tool="felt-tip" colour="black" top="133" left="38" top1="194" left1="58">line</object>
+      <object tool="felt-tip" colour="black" top="194" left="58" top1="209" left1="103">line</object>
+      <object tool="felt-tip" colour="black" top="209" left="103" top1="211" left1="152">line</object>
+      <object tool="felt-tip" colour="black" top="211" left="152" top1="175" left1="189">line</object>
+      <object tool="felt-tip" colour="black" top="175" left="189" top1="115" left1="171">line</object>
+      <object tool="felt-tip" colour="black" top="115" left="171" top1="108" left1="124">line</object>
+      <object tool="felt-tip" colour="black" top="107" left="124" top1="112" left1="94">line</object>
+      <object tool="felt-tip" colour="black" top="112" left="93" top1="141" left1="65">line</object>
+      <object tool="felt-tip" colour="black" top="140" left="65" top1="190" left1="67">line</object>
+      <object tool="felt-tip" colour="black" top="190" left="67" top1="191" left1="109">line</object>
+      <object tool="felt-tip" colour="black" top="191" left="109" top1="189" left1="147">line</object>
+      <object tool="felt-tip" colour="black" top="189" left="147" top1="168" left1="164">line</object>
+      <object tool="felt-tip" colour="black" top="168" left="164" top1="117" left1="168">line</object>
+      <object tool="felt-tip" colour="black" top="84" left="210" top1="172" left1="191">line</object>
+      <object tool="felt-tip" colour="black" top="64" left="227" top1="4" left1="284">line</object>
+      <object tool="felt-tip" colour="black" top="65" left="131" top1="-2" left1="140">line</object>
+      <object tool="felt-tip" colour="black" top="57" left="54" top1="-1" left1="0">line</object>
+      <object tool="felt-tip" colour="black" top="234" left="101" top1="285" left1="95">line</object>
+      <object tool="felt-tip" colour="black" top="230" left="168" top1="287" left1="228">line</object>
+      <object tool="felt-tip" colour="black" top="209" left="40" top1="246" left1="-5">line</object>
+      <object tool="felt-tip" colour="black" top="125" left="17" top1="113" left1="-5">line</object>
+      <object tool="felt-tip" colour="black" top="180" left="232" top1="193" left1="284">line</object>
+      <object tool="felt-tip" colour="black" top="11" left="12" top1="62" left1="127">line</object>
+      <object tool="felt-tip" colour="black" top="6" left="5" top1="120" left1="17">line</object>
+      <object tool="felt-tip" colour="black" top="206" left="205" top1="284" left1="225">line</object>
+      <object tool="felt-tip" colour="black" top="237" left="103" top1="286" left1="222">line</object>
+      <object tool="felt-tip" colour="black" top="182" left="233" top1="252" left1="281">line</object>
+      <object tool="felt-tip" colour="black" top="1" left="281" top1="65" left1="136">line</object>
+      <object tool="felt-tip" colour="black" top="181" left="232" top1="185" left1="232">line</object>
+      <object tool="felt-tip" colour="black" top="185" left="232" top1="3" left1="284">line</object>
+      <object tool="felt-tip" colour="black" top="124" left="120" top1="128" left1="100">line</object>
+      <object tool="felt-tip" colour="black" top="128" left="100" top1="146" left1="88">line</object>
+      <object tool="felt-tip" colour="black" top="146" left="88" top1="158" left1="89">line</object>
+      <object tool="felt-tip" colour="black" top="158" left="89" top1="168" left1="91">line</object>
+      <object tool="felt-tip" colour="black" top="168" left="91" top1="180" left1="100">line</object>
+      <object tool="felt-tip" colour="black" top="180" left="100" top1="182" left1="110">line</object>
+      <object tool="felt-tip" colour="black" top="182" left="111" top1="182" left1="113">line</object>
+      <object tool="felt-tip" colour="black" top="182" left="114" top1="178" left1="126">line</object>
+      <object tool="felt-tip" colour="black" top="178" left="126" top1="176" left1="130">line</object>
+      <object tool="felt-tip" colour="black" top="176" left="130" top1="166" left1="136">line</object>
+      <object tool="felt-tip" colour="black" top="164" left="136" top1="152" left1="143">line</object>
+      <object tool="felt-tip" colour="black" top="151" left="143" top1="136" left1="138">line</object>
+      <object tool="felt-tip" colour="black" top="135" left="139" top1="125" left1="120">line</object>
+      <object tool="felt-tip" colour="black" top="125" left="120" top1="132" left1="98">line</object>
+      <object tool="felt-tip" colour="black" top="132" left="98" top1="140" left1="114">line</object>
+      <object tool="felt-tip" colour="black" top="140" left="114" top1="131" left1="114">line</object>
+      <object tool="felt-tip" colour="black" top="131" left="114" top1="133" left1="108">line</object>
+      <object tool="felt-tip" colour="black" top="133" left="108" top1="140" left1="110">line</object>
+      <object tool="felt-tip" colour="black" top="140" left="110" top1="143" left1="97">line</object>
+      <object tool="felt-tip" colour="black" top="142" left="97" top1="136" left1="98">line</object>
+      <object tool="felt-tip" colour="black" top="136" left="98" top1="140" left1="105">line</object>
+      <object tool="felt-tip" colour="black" top="138" left="104" top1="142" left1="93">line</object>
+      <object tool="felt-tip" colour="black" top="142" left="92" top1="144" left1="117">line</object>
+      <object tool="felt-tip" colour="black" top="144" left="117" top1="150" left1="99">line</object>
+      <object tool="felt-tip" colour="black" top="150" left="99" top1="146" left1="116">line</object>
+      <object tool="felt-tip" colour="black" top="146" left="116" top1="146" left1="98">line</object>
+      <object tool="felt-tip" colour="black" top="146" left="98" top1="159" left1="91">line</object>
+      <object tool="felt-tip" colour="black" top="158" left="91" top1="148" left1="92">line</object>
+      <object tool="felt-tip" colour="black" top="148" left="92" top1="158" left1="111">line</object>
+      <object tool="felt-tip" colour="black" top="157" left="111" top1="148" left1="100">line</object>
+      <object tool="felt-tip" colour="black" top="148" left="100" top1="162" left1="100">line</object>
+      <object tool="felt-tip" colour="black" top="162" left="100" top1="162" left1="99">line</object>
+      <object tool="felt-tip" colour="black" top="158" left="100" top1="148" left1="96">line</object>
+      <object tool="felt-tip" colour="black" top="148" left="96" top1="167" left1="101">line</object>
+      <object tool="felt-tip" colour="black" top="167" left="101" top1="158" left1="90">line</object>
+      <object tool="felt-tip" colour="black" top="158" left="90" top1="170" left1="108">line</object>
+      <object tool="felt-tip" colour="black" top="170" left="108" top1="154" left1="104">line</object>
+      <object tool="felt-tip" colour="black" top="153" left="104" top1="166" left1="117">line</object>
+      <object tool="felt-tip" colour="black" top="167" left="118" top1="140" left1="135">line</object>
+      <object tool="felt-tip" colour="black" top="140" left="136" top1="130" left1="120">line</object>
+      <object tool="felt-tip" colour="black" top="129" left="119" top1="148" left1="117">line</object>
+      <object tool="felt-tip" colour="black" top="148" left="117" top1="138" left1="130">line</object>
+      <object tool="felt-tip" colour="black" top="138" left="130" top1="158" left1="122">line</object>
+      <object tool="felt-tip" colour="black" top="158" left="122" top1="134" left1="126">line</object>
+      <object tool="felt-tip" colour="black" top="134" left="124" top1="128" left1="114">line</object>
+      <object tool="felt-tip" colour="black" top="128" left="117" top1="148" left1="129">line</object>
+      <object tool="felt-tip" colour="black" top="168" left="133" top1="156" left1="128">line</object>
+      <object tool="felt-tip" colour="black" top="158" left="129" top1="149" left1="140">line</object>
+      <object tool="felt-tip" colour="black" top="148" left="140" top1="140" left1="134">line</object>
+      <object tool="felt-tip" colour="black" top="138" left="134" top1="132" left1="126">line</object>
+      <object tool="felt-tip" colour="black" top="136" left="122" top1="176" left1="101">line</object>
+      <object tool="felt-tip" colour="black" top="176" left="99" top1="154" left1="97">line</object>
+      <object tool="felt-tip" colour="black" top="154" left="97" top1="168" left1="93">line</object>
+      <object tool="felt-tip" colour="black" top="168" left="94" top1="155" left1="108">line</object>
+      <object tool="felt-tip" colour="black" top="155" left="108" top1="172" left1="101">line</object>
+      <object tool="felt-tip" colour="black" top="172" left="101" top1="140" left1="104">line</object>
+      <object tool="felt-tip" colour="black" top="149" left="128" top1="180" left1="104">line</object>
+      <object tool="felt-tip" colour="black" top="180" left="104" top1="161" left1="112">line</object>
+      <object tool="felt-tip" colour="black" top="161" left="112" top1="181" left1="111">line</object>
+      <object tool="felt-tip" colour="black" top="181" left="111" top1="165" left1="130">line</object>
+      <object tool="felt-tip" colour="black" top="165" left="130" top1="176" left1="118">line</object>
+      <object tool="felt-tip" colour="black" top="176" left="118" top1="158" left1="120">line</object>
+      <object tool="felt-tip" colour="black" top="157" left="124" top1="178" left1="116">line</object>
+      <object tool="felt-tip" colour="black" top="178" left="116" top1="170" left1="132">line</object>
+      <object tool="felt-tip" colour="black" top="169" left="132" top1="150" left1="132">line</object>
+      <object tool="felt-tip" colour="black" top="148" left="132" top1="170" left1="122">line</object>
+      <object tool="felt-tip" colour="black" top="170" left="122" top1="146" left1="138">line</object>
+      <object tool="felt-tip" colour="black" top="146" left="138" top1="164" left1="134">line</object>
+      <object tool="felt-tip" colour="black" top="160" left="134" top1="143" left1="134">line</object>
+      <object tool="felt-tip" colour="black" top="142" left="136" top1="153" left1="140">line</object>
+      <object tool="felt-tip" colour="black" top="156" left="124" top1="166" left1="104">line</object>
+      <object tool="felt-tip" colour="black" top="171" left="106" top1="178" left1="109">line</object>
+      <object tool="felt-tip" colour="black" top="120" left="120" top1="110" left1="110">line</object>
+      <object tool="felt-tip" colour="black" top="110" left="110" top1="123" left1="118">line</object>
+      <object tool="felt-tip" colour="black" top="123" left="118" top1="114" left1="133">line</object>
+      <object tool="felt-tip" colour="black" top="114" left="133" top1="127" left1="120">line</object>
+      <object tool="felt-tip" colour="black" top="127" left="120" top1="98" left1="122">line</object>
+      <object tool="felt-tip" colour="black" top="98" left="122" top1="108" left1="114">line</object>
+      <object tool="felt-tip" colour="black" top="98" left="127" top1="108" left1="134">line</object>
+      <object tool="felt-tip" colour="black" top="106" left="130" top1="97" left1="124">line</object>
+      <object tool="felt-tip" colour="black" top="108" left="134" top1="112" left1="134">line</object>
+      <object tool="felt-tip" colour="red" top="138" left="102" top1="166" left1="128">line</object>
+      <object tool="felt-tip" colour="red" top="138" left="127" top1="163" left1="104">line</object>
+      <object tool="felt-tip" colour="black" top="136" left="92" top1="128" left1="64">line</object>
+      <object tool="felt-tip" colour="black" top="128" left="64" top1="108" left1="61">line</object>
+      <object tool="felt-tip" colour="black" top="145" left="86" top1="142" left1="58">line</object>
+      <object tool="felt-tip" colour="black" top="142" left="58" top1="127" left1="46">line</object>
+      <object tool="felt-tip" colour="black" top="153" left="85" top1="154" left1="62">line</object>
+      <object tool="felt-tip" colour="black" top="154" left="62" top1="158" left1="49">line</object>
+      <object tool="felt-tip" colour="black" top="162" left="88" top1="170" left1="60">line</object>
+      <object tool="felt-tip" colour="black" top="170" left="60" top1="194" left1="50">line</object>
+      <object tool="felt-tip" colour="black" top="141" left="142" top1="135" left1="178">line</object>
+      <object tool="felt-tip" colour="black" top="135" left="177" top1="110" left1="180">line</object>
+      <object tool="felt-tip" colour="black" top="150" left="143" top1="139" left1="188">line</object>
+      <object tool="felt-tip" colour="black" top="139" left="188" top1="124" left1="203">line</object>
+      <object tool="felt-tip" colour="black" top="155" left="144" top1="157" left1="176">line</object>
+      <object tool="felt-tip" colour="black" top="157" left="176" top1="169" left1="190">line</object>
+      <object tool="felt-tip" colour="black" top="167" left="136" top1="182" left1="163">line</object>
+      <object tool="felt-tip" colour="black" top="182" left="163" top1="192" left1="164">line</object>
+    </objects>
+  </sheet>
+</DaveCADDrawing>

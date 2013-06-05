@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE DaveCADDrawing [
+<!ELEMENT DaveCADDrawing (sheet+)>
+<!ELEMENT sheet (properties, objects)>
+<!ELEMENT properties (property*)>
+<!ELEMENT objects (object*)>
+
+<!ELEMENT property (#PCDATA)>
+<!ELEMENT object (#PCDATA)>
+
+<!ATTLIST DaveCADDrawing file-version CDATA #REQUIRED>
+<!ATTLIST property name (media|sheet-name|author|date) #REQUIRED>
+
+<!ATTLIST object tool (ball-point|felt-tip|pencil) #REQUIRED>
+<!ATTLIST object colour (red|black|green|blue) #IMPLIED>
+<!ATTLIST object top CDATA #REQUIRED>
+<!ATTLIST object left CDATA #REQUIRED>
+<!ATTLIST object top1 CDATA #IMPLIED>
+<!ATTLIST object left1 CDATA #IMPLIED>
+]>
+<DaveCADDrawing file-version="0.1">
+  <sheet>
+    <properties>
+      <property name="sheet-name">sheet1</property>
+      <property name="media">post-it</property>
+      <property name="author">User</property>
+      <property name="date"></property>
+    </properties>
+    <objects>
+      <object tool="felt-tip" colour="green" top="30" left="58" top1="25" left1="86">line</object>
+      <object tool="felt-tip" colour="green" top="25" left="86" top1="37" left1="148">line</object>
+      <object tool="felt-tip" colour="green" top="38" left="148" top1="62" left1="186">line</object>
+      <object tool="felt-tip" colour="green" top="62" left="186" top1="104" left1="206">line</object>
+      <object tool="felt-tip" colour="green" top="105" left="204" top1="137" left1="200">line</object>
+      <object tool="felt-tip" colour="green" top="142" left="202" top1="211" left1="165">line</object>
+      <object tool="felt-tip" colour="green" top="211" left="165" top1="230" left1="113">line</object>
+      <object tool="felt-tip" colour="green" top="230" left="113" top1="191" left1="41">line</object>
+      <object tool="felt-tip" colour="green" top="191" left="41" top1="166" left1="48">line</object>
+      <object tool="felt-tip" colour="green" top="165" left="48" top1="121" left1="138">line</object>
+      <object tool="felt-tip" colour="green" top="121" left="138" top1="87" left1="141">line</object>
+      <object tool="felt-tip" colour="green" top="87" left="141" top1="88" left1="80">line</object>
+      <object tool="felt-tip" colour="green" top="88" left="80" top1="48" left1="77">line</object>
+      <object tool="felt-tip" colour="green" top="48" left="77" top1="54" left1="24">line</object>
+      <object tool="felt-tip" colour="green" top="56" left="27" top1="104" left1="28">line</object>
+      <object tool="felt-tip" colour="green" top="101" left="38" top1="107" left1="79">line</object>
+      <object tool="felt-tip" colour="green" top="107" left="79" top1="163" left1="12">line</object>
+      <object tool="felt-tip" colour="green" top="163" left="12" top1="224" left1="17">line</object>
+      <object tool="felt-tip" colour="green" top="224" left="17" top1="258" left1="88">line</object>
+      <object tool="felt-tip" colour="green" top="258" left="88" top1="256" left1="210">line</object>
+      <object tool="felt-tip" colour="green" top="252" left="212" top1="151" left1="242">line</object>
+      <object tool="felt-tip" colour="green" top="145" left="244" top1="81" left1="252">line</object>
+      <object tool="felt-tip" colour="green" top="81" left="252" top1="26" left1="249">line</object>
+      <object tool="felt-tip" colour="green" top="26" left="249" top1="17" left1="134">line</object>
+      <object tool="felt-tip" colour="green" top="17" left="134" top1="30" left1="59">line</object>
+      <object tool="felt-tip" colour="red" top="100" left="42" top1="106" left1="3">line</object>
+      <object tool="felt-tip" colour="red" top="107" left="2" top1="111" left1="18">line</object>
+      <object tool="felt-tip" colour="red" top="111" left="18" top1="121" left1="9">line</object>
+      <object tool="felt-tip" colour="red" top="121" left="9" top1="106" left1="46">line</object>
+      <object tool="felt-tip" colour="black" top="58" left="53" top1="65" left1="56">line</object>
+      <object tool="felt-tip" colour="black" top="92" left="122" top1="99" left1="109">line</object>
+    </objects>
+  </sheet>
+</DaveCADDrawing>

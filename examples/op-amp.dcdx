@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE DaveCADDrawing [
+<!ELEMENT DaveCADDrawing (sheet+)>
+<!ELEMENT sheet (properties, objects)>
+<!ELEMENT properties (property*)>
+<!ELEMENT objects (object*)>
+
+<!ELEMENT property (#PCDATA)>
+<!ELEMENT object (#PCDATA)>
+
+<!ATTLIST DaveCADDrawing file-version CDATA #REQUIRED>
+<!ATTLIST property name (media|sheet-name|author|date) #REQUIRED>
+
+<!ATTLIST object tool (ball-point|felt-tip|pencil) #REQUIRED>
+<!ATTLIST object colour (red|black|green|blue) #IMPLIED>
+<!ATTLIST object top CDATA #REQUIRED>
+<!ATTLIST object left CDATA #REQUIRED>
+<!ATTLIST object top1 CDATA #IMPLIED>
+<!ATTLIST object left1 CDATA #IMPLIED>
+]>
+<DaveCADDrawing file-version="0.1">
+  <sheet>
+    <properties>
+      <property name="media">post-it</property>
+      <property name="sheet-name">sheet1</property>
+      <property name="author">User</property>
+      <property name="date">00/00/00</property>
+    </properties>
+    <objects>
+      <object tool="ball-point" colour="red" top="97" left="90" top1="177" left1="90">line</object>
+      <object tool="ball-point" colour="red" top="177" left="90" top1="139" left1="171">line</object>
+      <object tool="ball-point" colour="red" top="139" left="171" top1="98" left1="91">line</object>
+      <object tool="ball-point" colour="red" top="139" left="170" top1="139" left1="238">line</object>
+      <object tool="ball-point" colour="red" top="120" left="91" top1="120" left1="36">line</object>
+      <object tool="ball-point" colour="red" top="154" left="90" top1="154" left1="38">line</object>
+      <object tool="ball-point" colour="red" top="154" left="101" top1="154" left1="119">line</object>
+      <object tool="ball-point" colour="red" top="118" left="101" top1="118" left1="117">line</object>
+      <object tool="ball-point" colour="red" top="160" left="111" top1="140" left1="111">line</object>
+    </objects>
+  </sheet>
+</DaveCADDrawing>
