@@ -99,6 +99,9 @@ begin
   fFileName := '';
   fFileValid := false;
   fModified:=false;
+  session.scale:=1;
+  session.translateX:=0;
+  session.translateY:=0;
 end;
 
 constructor TDaveCadFile.create (E: TDaveCadFileErrorCallback);

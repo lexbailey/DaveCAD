@@ -143,6 +143,7 @@ type
     procedure pbDrawTextTwoLine(pbtext: string; pbtext2: string);
     procedure SelectSheet(sheet: string);
     procedure rescan();
+    function canEdit: boolean;
   public
     { public declarations }
     procedure changeSheetProps(oldSheetName, newSheetName, newSheetAuthor, newSheetDate, newSheetMedia: string);
@@ -308,12 +309,35 @@ begin
    freeRenderer;
 end;
 
+function TfrmMain.canEdit:boolean;
+var sheets: TDaveCADSheetList;
+  sheet: TDaveCADSheet;
+begin
+  result := false; //not editable until further notice
+  if fileState = fsLoadedValid then begin //if we have a loaded file and it is valid...
+    //get all sheets
+    sheets := loadedFile.getSheets;
+    //find the selected sheet
+    sheet := TDaveCADSheet.create;
+    sheet.assign(sheets.sheet[loadedFile.Session.SelectedSheet]);
+    //we don't need sheets any more
+    sheets.Free;
+    //if the selected sheet exists then we can edit it! YAY!
+    if sheet <> nil then begin
+      result := true;
+      sheet.Free;
+    end;
+  end;
+end;
+
 procedure TfrmMain.pbDrawingMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-  mouseIsDown := true;
-  firstX := X;
-  firstY := Y;
+  if canEdit then begin
+    mouseIsDown := true;
+    firstX := X;
+    firstY := Y;
+  end;
 end;
 
 procedure TfrmMain.pbDrawingMouseLeave(Sender: TObject);
