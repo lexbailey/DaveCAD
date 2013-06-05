@@ -1,20 +1,20 @@
 object frmMain: TfrmMain
-  Left = 301
+  Left = 129
   Height = 581
-  Top = 157
+  Top = 124
   Width = 888
   Caption = 'DaveCAD'
-  ClientHeight = 555
+  ClientHeight = 561
   ClientWidth = 888
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '0.9.30.2'
+  LCLVersion = '1.0.6.0'
   object Status: TStatusBar
     Left = 0
-    Height = 20
-    Top = 535
+    Height = 23
+    Top = 538
     Width = 888
     Panels = <    
       item
@@ -39,63 +39,63 @@ object frmMain: TfrmMain
       OnMouseMove = hintMouseMove
     end
     object tbOpen: TToolButton
-      Left = 86
+      Left = 80
       Top = 2
       Action = FileOpen1
       OnMouseMove = hintMouseMove
     end
     object tbSave: TToolButton
-      Left = 139
+      Left = 129
       Top = 2
       Action = FileSave
       OnMouseMove = hintMouseMove
     end
     object ToolButton1: TToolButton
-      Left = 176
+      Left = 161
       Top = 2
-      Width = 8
+      Width = 10
       Caption = 'ToolButton1'
       Style = tbsSeparator
     end
     object tbCut: TToolButton
-      Left = 184
+      Left = 171
       Top = 2
       Action = EditCut1
       OnMouseMove = hintMouseMove
     end
     object tbCopy: TToolButton
-      Left = 214
+      Left = 198
       Top = 2
       Action = EditCopy1
       OnMouseMove = hintMouseMove
     end
     object tbPaste: TToolButton
-      Left = 254
+      Left = 234
       Top = 2
       Action = EditPaste1
       OnMouseMove = hintMouseMove
     end
     object ToolButton2: TToolButton
-      Left = 348
+      Left = 311
       Top = 2
-      Width = 8
+      Width = 10
       Caption = 'ToolButton2'
       Style = tbsSeparator
     end
     object tbDelete: TToolButton
-      Left = 297
+      Left = 270
       Top = 2
       Action = EditDelete1
       OnMouseMove = hintMouseMove
     end
     object tbUndo: TToolButton
-      Left = 356
+      Left = 321
       Top = 2
       Action = EditUndo1
       OnMouseMove = hintMouseMove
     end
     object tbRedo: TToolButton
-      Left = 396
+      Left = 358
       Top = 2
       Action = EditRedo
       OnMouseMove = hintMouseMove
@@ -103,26 +103,27 @@ object frmMain: TfrmMain
   end
   object Splitter1: TSplitter
     Left = 184
-    Height = 491
+    Height = 494
     Top = 44
     Width = 5
   end
   object Panel2: TPanel
     Left = 189
-    Height = 491
+    Height = 494
     Top = 44
     Width = 699
     Align = alClient
-    ClientHeight = 491
+    ClientHeight = 494
     ClientWidth = 699
     TabOrder = 3
     object pbDrawing: TPaintBox
       Left = 1
-      Height = 405
+      Height = 408
       Top = 1
       Width = 697
       Align = alClient
       ParentColor = False
+      OnClick = pbDrawingClick
       OnMouseDown = pbDrawingMouseDown
       OnMouseMove = pbDrawingMouseMove
       OnMouseUp = pbDrawingMouseUp
@@ -133,17 +134,17 @@ object frmMain: TfrmMain
     object tcSheets: TTabControl
       Left = 1
       Height = 38
-      Top = 406
+      Top = 409
       Width = 697
-      Align = alBottom
-      OnChange = tcSheetsChange
-      TabOrder = 0
       TabStop = False
+      OnChange = tcSheetsChange
+      Align = alBottom
+      TabOrder = 0
     end
     object Panel1: TPanel
       Left = 1
       Height = 46
-      Top = 444
+      Top = 447
       Width = 697
       Align = alBottom
       AutoSize = True
@@ -169,13 +170,13 @@ object frmMain: TfrmMain
           OnMouseMove = hintMouseMove
         end
         object tbDeleteSheet: TToolButton
-          Left = 83
+          Left = 73
           Top = 2
           Action = SheetDelete
           OnMouseMove = hintMouseMove
         end
         object tbEditSheet: TToolButton
-          Left = 173
+          Left = 145
           Top = 2
           Action = SheetEdit
           OnMouseMove = hintMouseMove
@@ -212,26 +213,28 @@ object frmMain: TfrmMain
   end
   object sbToolbox: TScrollBox
     Left = 0
-    Height = 491
+    Height = 494
     Top = 44
     Width = 184
+    HorzScrollBar.Page = 180
+    VertScrollBar.Page = 490
     Align = alLeft
-    ClientHeight = 487
+    ClientHeight = 490
     ClientWidth = 180
     TabOrder = 4
     OnResize = sbToolboxResize
     object pnlToolbox: TPanel
       Left = 0
-      Height = 487
+      Height = 490
       Top = 0
       Width = 174
       Align = alLeft
-      ClientHeight = 487
+      ClientHeight = 490
       ClientWidth = 174
       TabOrder = 0
       object Label1: TLabel
         Left = 1
-        Height = 23
+        Height = 26
         Top = 1
         Width = 172
         Align = alTop
@@ -242,8 +245,8 @@ object frmMain: TfrmMain
       end
       object Label2: TLabel
         Left = 1
-        Height = 17
-        Top = 24
+        Height = 16
+        Top = 27
         Width = 172
         Align = alTop
         Caption = 'Drawing tools'
@@ -252,7 +255,7 @@ object frmMain: TfrmMain
       object tbDrawingTool: TToolBar
         Left = 1
         Height = 56
-        Top = 41
+        Top = 43
         Width = 172
         AutoSize = True
         ButtonHeight = 54
@@ -272,7 +275,7 @@ object frmMain: TfrmMain
         end
         object tpBallPoint: TToolButton
           Tag = 1
-          Left = 46
+          Left = 41
           Hint = 'Ballpoint'
           Top = 2
           Caption = 'Ballpoint'
@@ -283,7 +286,7 @@ object frmMain: TfrmMain
         end
         object tbFelt: TToolButton
           Tag = 2
-          Left = 109
+          Left = 96
           Hint = 'Felt-tip'
           Top = 2
           Caption = 'Felt-tip'
@@ -295,8 +298,8 @@ object frmMain: TfrmMain
       end
       object Label3: TLabel
         Left = 1
-        Height = 17
-        Top = 170
+        Height = 16
+        Top = 171
         Width = 172
         Align = alTop
         Caption = 'Editting tools'
@@ -325,7 +328,7 @@ object frmMain: TfrmMain
         end
         object tbMove: TToolButton
           Tag = 1
-          Left = 100
+          Left = 88
           Hint = 'Move objects around on the drawing'
           Top = 2
           Caption = 'Move'
@@ -347,7 +350,7 @@ object frmMain: TfrmMain
         end
         object tbLine: TToolButton
           Tag = 3
-          Left = 74
+          Left = 63
           Hint = 'Draw a straight line'
           Top = 56
           Caption = 'Draw Line'
@@ -358,8 +361,8 @@ object frmMain: TfrmMain
       end
       object Label4: TLabel
         Left = 1
-        Height = 17
-        Top = 97
+        Height = 16
+        Top = 99
         Width = 172
         Align = alTop
         Caption = 'Colours'
@@ -368,7 +371,7 @@ object frmMain: TfrmMain
       object tbColours: TToolBar
         Left = 1
         Height = 56
-        Top = 114
+        Top = 115
         Width = 172
         AutoSize = True
         ButtonHeight = 54
@@ -408,7 +411,7 @@ object frmMain: TfrmMain
         end
         object tbBlack: TToolButton
           Tag = 3
-          Left = 118
+          Left = 112
           Hint = 'Select pen colour black'
           Top = 2
           Caption = 'Black'

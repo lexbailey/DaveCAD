@@ -121,6 +121,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure pbDrawingClick(Sender: TObject);
     procedure pbDrawingMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure pbDrawingMouseLeave(Sender: TObject);
@@ -313,6 +314,17 @@ begin
    end;
 
    freeRenderer;
+end;
+
+procedure TfrmMain.pbDrawingClick(Sender: TObject);
+begin
+  if canEdit then begin
+    case edittingTool of
+      EDIT_TOOL_TEXT begin
+        //TODO text!
+      end;
+    end;
+  end;
 end;
 
 function TfrmMain.canEdit:boolean;
