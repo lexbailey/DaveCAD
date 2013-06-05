@@ -7,11 +7,31 @@ interface
 uses
   Classes, SysUtils, davecad_file_parser, graphics, LResources, davecad_enum;
 
+procedure initRenderer;
+procedure freeRenderer;
 procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: integer; scale: double; translation : TPoint);
 procedure renderObject(obj: TDaveCADObject; canvas: TCanvas; startX, startY: integer; scale: double; translation : TPoint);
 function getOrigin(sheet: TDaveCADSheet; cwidth, cheight: integer; scale: double): TPoint;
 
+var
+  postitPic, notepadA4Pic : TPicture;
+
 implementation
+
+procedure initRenderer;
+begin
+  postitPic := TPicture.Create;
+  postitPic.LoadFromLazarusResource(RENDER_MEDIA_POST_IT);
+
+  notepadA4Pic := TPicture.Create;
+  notepadA4Pic.LoadFromLazarusResource(RENDER_MEDIA_NOTEBOOK_A4);
+end;
+
+procedure freeRenderer;
+begin
+  postitPic.Free;
+  notepadA4Pic.Free;
+end;
 
 procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: integer; scale: double; translation : TPoint);
 var picture: TPicture;
@@ -34,15 +54,14 @@ begin
 
   //draw the background for the sheet we are viewing
   if (sheet.Media = RENDER_MEDIA_POST_IT) or (sheet.Media = RENDER_MEDIA_NOTEBOOK_A4) then begin
-    //TODO, move picture section away from draw to speed things up
-    picture := TPicture.Create;
-    picture.LoadFromLazarusResource(sheet.Media);
+    if sheet.Media = RENDER_MEDIA_POST_IT then picture := postitPic;
+    if sheet.Media = RENDER_MEDIA_NOTEBOOK_A4 then picture := notepadA4Pic;
+
     picWidth := round(picture.Width*scale);
     picHeight := round(picture.Height*scale);
     startX := centreX-round(picWidth/2);
     startY := centreY-round(picHeight/2);
     canvas.StretchDraw(rect(startX,startY, startX+picWidth, startY+ picHeight),picture.Bitmap);
-    picture.Free;
 
     for i:= 0 to sheet.objectCount-1 do begin
       renderObject(sheet.objects[i], canvas, startX, startY, scale, translation);

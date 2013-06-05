@@ -291,6 +291,8 @@ begin
 
   drawingTool := 0;
   edittingTool := 0;
+
+  initRenderer;
 end;
 
 procedure TfrmMain.FormDestroy(Sender: TObject);
@@ -302,6 +304,8 @@ begin
      tempObj.Free;
      tempObj := nil;
    end;
+
+   freeRenderer;
 end;
 
 procedure TfrmMain.pbDrawingMouseDown(Sender: TObject; Button: TMouseButton;
