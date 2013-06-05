@@ -6,9 +6,15 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
-  ActnList, ComCtrls, ExtCtrls, StdCtrls, StdActns, laz2_XMLRead, laz2_DOM,
+  ActnList, ComCtrls, ExtCtrls, StdCtrls, StdActns,
+  davecad_enum,
+  {$IFDEF XMLVersionLaz2}
+  laz2_XMLRead, laz2_DOM,
+  {$ELSE}
+  XMLRead, DOM,
+  {$endif}
   davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer,
-  davecad_sheet_properties_form, davecad_about, math, davecad_enum, types;
+  davecad_sheet_properties_form, davecad_about, math, types;
 
 type
 

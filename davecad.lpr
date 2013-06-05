@@ -17,8 +17,12 @@ davecad_renderer, davecad_sheet_properties_form, davecad_about, davecad_enum
 {$R *.res}
 
 begin
+  {$IFDEF LazVersionGT1}
   RequireDerivedFormResource := True;
-  //SetHeapTraceOutput('heap.trc');
+  {$ENDIF}
+  {$IFDEF HeapTraceToFile}
+  SetHeapTraceOutput('heap.trc');
+  {$ENDIF}
   Application.Initialize;
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmSheetProps, frmSheetProps);

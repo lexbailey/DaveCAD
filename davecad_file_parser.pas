@@ -5,7 +5,14 @@ unit davecad_file_parser;
 interface
 
 uses
-  Classes, SysUtils, laz2_DOM, davecad_enum, dialogs;
+  Classes, SysUtils,
+  davecad_enum,
+  {$IFDEF XMLVersionLaz2}
+  laz2_DOM,
+  {$ELSE}
+  DOM,
+  {$endif}
+  dialogs;
 
 type
 

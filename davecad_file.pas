@@ -7,7 +7,14 @@ unit davecad_file;
 interface
 
 uses
-  Classes, SysUtils, laz2_XMLRead, laz2_DOM, davecad_error, laz2_XMLWrite,
+  Classes, SysUtils,
+  davecad_enum,
+  {$IFDEF XMLVersionLaz2}
+  laz2_XMLRead, laz2_XMLWrite, laz2_DOM,
+  {$ELSE}
+  XMLRead, XMLWrite, DOM,
+  {$endif}
+  davecad_error,
   davecad_file_parser, dialogs, LResources, davecad_renderer;
 
   type

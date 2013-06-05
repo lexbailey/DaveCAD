@@ -2,6 +2,10 @@ unit davecad_enum;
 
 {$mode objfpc}{$H+}
 
+//{$DEFINE XMLVersionLaz2}
+//{$DEFINE LazVersionGT1}
+//{$DEFINE HeapTraceToFile}
+
 interface
 
 uses
