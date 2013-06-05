@@ -16,6 +16,8 @@ uses
 
     TDaveCADFileSession = record
       SelectedSheet: string;
+      scale: double;
+      translateX, translateY: integer;
     end;
 
     TDaveCadFile = class(TObject)
@@ -278,10 +280,10 @@ begin
     dcObject := fFile.CreateElement('object');
     dcObject.SetAttribute('tool', tool);
     if colour <> '' then dcObject.SetAttribute('colour', colour);
-    dcObject.SetAttribute('top', inttostr(originY-origin.y));
-    dcObject.SetAttribute('left', inttostr(originX-origin.x));
-    dcObject.SetAttribute('top1', inttostr(lastY-origin.y));
-    dcObject.SetAttribute('left1', inttostr(lastX-origin.x));
+    dcObject.SetAttribute('top', inttostr(round((originY-origin.y)/session.scale)));
+    dcObject.SetAttribute('left', inttostr(round((originX-origin.x)/session.scale)));
+    dcObject.SetAttribute('top1', inttostr(round((lastY-origin.y)/session.scale)));
+    dcObject.SetAttribute('left1', inttostr(round((lastX-origin.x)/session.scale)));
 
     dcObject.AppendChild(fFile.CreateTextNode(objType));
 

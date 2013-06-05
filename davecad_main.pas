@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
   ActnList, ComCtrls, ExtCtrls, StdCtrls, StdActns, laz2_XMLRead, laz2_DOM,
   davecad_file, davecad_error, lclintf, davecad_file_parser, davecad_renderer,
-  davecad_sheet_properties_form, davecad_about, math, davecad_enum;
+  davecad_sheet_properties_form, davecad_about, math, davecad_enum, types;
 
 type
 
@@ -25,10 +25,12 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    lblZoom: TLabel;
     miEditSheet: TMenuItem;
     miDeleteSheet: TMenuItem;
     miNewSheet: TMenuItem;
     miSheet: TMenuItem;
+    Panel1: TPanel;
     pnlToolbox: TPanel;
     sbToolbox: TScrollBox;
     SheetEdit: TAction;
@@ -102,6 +104,7 @@ type
     tbGreen: TToolButton;
     tbBlack: TToolButton;
     tpBallPoint: TToolButton;
+    tbZoom: TTrackBar;
     procedure actAboutExecute(Sender: TObject);
     procedure FileCloseExecute(Sender: TObject);
     procedure FileNewExecute(Sender: TObject);
@@ -119,6 +122,8 @@ type
       Y: Integer);
     procedure pbDrawingMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure pbDrawingMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure pbDrawingPaint(Sender: TObject);
     procedure sbToolboxResize(Sender: TObject);
     procedure SheetDeleteExecute(Sender: TObject);
@@ -131,6 +136,7 @@ type
     procedure tbColourClick(Sender: TObject);
     procedure tcSheetsChange(Sender: TObject);
     procedure TOpenDialogShow(Sender: TObject);
+    procedure tbZoomChange(Sender: TObject);
   private
     { private declarations }
     procedure pbDrawText(pbtext: string);
@@ -314,6 +320,9 @@ end;
 
 procedure TfrmMain.pbDrawingMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
+var origin: TPoint;
+  sheet: TDaveCADSheet;
+  sheets: TDaveCADSheetList;
 begin
   Status.Panels[0].Text := ''; //clear the hint from the status bar
   if mouseIsDown then begin
@@ -324,13 +333,23 @@ begin
           tempObj.Free;
           tempObj := nil;
         end;
+        origin := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+
+        sheets := loadedFile.getSheets;
+
+        sheet := TDaveCADSheet.create;
+        sheet.assign(sheets.sheet[loadedFile.Session.SelectedSheet]);
+        sheets.Free;
+
         tempObj := TDaveCADObject.Create;
         tempObj.Name:='line';
-        tempObj.point1 := point(firstX, firstY);
-        tempObj.point2 := point(X, Y);
+        tempObj.point1 := point(round((firstX-origin.x)/loadedFile.Session.scale), round((firstY-origin.y)/loadedFile.Session.scale));
+        tempObj.point2 := point(round((X-origin.x)/loadedFile.Session.scale), round((Y-origin.x)/loadedFile.Session.scale));
         tempObj.colour:=selectedColour;
         tempObj.tool:=drawingTool;
         pbDrawing.Invalidate;
+
+        sheet.free;
       end;
     end;
   end;
@@ -345,7 +364,7 @@ begin
       EDIT_TOOL_LINE: begin //draw freehand
         sheet := TDaveCADSheet.create;
         sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
-        loadedFile.addObject('line', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height));
+        loadedFile.addObject('line', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale));
         sheet.Free;
       end;
     end;
@@ -353,6 +372,16 @@ begin
   end;
   mouseIsDown:=false;
   doTool := false;
+end;
+
+procedure TfrmMain.pbDrawingMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+  loadedfile.Session.scale:= loadedfile.Session.scale + (wheeldelta / 1000);
+  if loadedFile.Session.scale > 2 then loadedFile.Session.scale := 2;
+  if loadedFile.Session.scale < 0.01 then loadedFile.Session.scale := 0.01;
+  tbZoom.Position:= round(loadedFile.Session.scale * 100);
+  pbDrawing.Invalidate;
 end;
 
 procedure TfrmMain.pbDrawText(pbtext: string);
@@ -381,7 +410,7 @@ procedure TfrmMain.pbDrawingPaint(Sender: TObject);
 var sheets: TDaveCADSheetList;
   sheet: TDaveCADSheet;
   tLastSheet: integer;
-  //startPoint : TPoint;
+ // startPoint : TPoint;
 begin
   //Decide what to draw!
   case fileState of
@@ -412,10 +441,10 @@ begin
         sheet.free;
         sheet:=TDaveCADSheet.create;
         sheet.loadWithObjectFrom(TDOMElement(loadedFile.getDOM.DocumentElement.ChildNodes.Item[tLastSheet]));
-        renderSheet(sheet, pbDrawing.Canvas, pbDrawing.Width, pbDrawing.Height);
+        renderSheet(sheet, pbDrawing.Canvas, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale, point(loadedFile.Session.translateX, loadedFile.Session.translateY));
         if assigned(tempObj) then begin
-          //startPoint := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height);
-          renderObject(tempObj, pbDrawing.Canvas, 0, 0);
+          //startPoint := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+          renderObject(tempObj, pbDrawing.Canvas, 0,0, loadedFile.Session.scale, point(loadedFile.Session.translateX, loadedFile.Session.translateY));
           tempObj.Free;
           tempObj := nil;
         end;
@@ -562,6 +591,15 @@ begin
   //If the user was about to save the current file and then canceled, dont open anything new.
   if not fileWasSaved then
     FileOpen1.Dialog.Close;
+end;
+
+procedure TfrmMain.tbZoomChange(Sender: TObject);
+begin
+  if fileState = fsLoadedValid then begin
+    loadedFile.Session.scale:=tbZoom.Position/100;
+    lblZoom.Caption:='Zoom: ' + inttostr(round(loadedFile.Session.scale*100)) + '%';
+    pbDrawing.Invalidate;
+  end;
 end;
 
 procedure TfrmMain.SelectSheet(sheet: string);

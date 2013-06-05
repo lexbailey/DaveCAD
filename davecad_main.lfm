@@ -118,7 +118,7 @@ object frmMain: TfrmMain
     TabOrder = 3
     object pbDrawing: TPaintBox
       Left = 1
-      Height = 410
+      Height = 408
       Top = 1
       Width = 697
       Align = alClient
@@ -127,46 +127,86 @@ object frmMain: TfrmMain
       OnMouseMove = pbDrawingMouseMove
       OnMouseUp = pbDrawingMouseUp
       OnMouseLeave = pbDrawingMouseLeave
+      OnMouseWheel = pbDrawingMouseWheel
       OnPaint = pbDrawingPaint
-    end
-    object ToolBar3: TToolBar
-      Left = 1
-      Height = 44
-      Top = 449
-      Width = 697
-      Align = alBottom
-      ButtonHeight = 42
-      Caption = 'ToolBar3'
-      Images = smallIcons
-      ShowCaptions = True
-      TabOrder = 0
-      object tbNewSheet: TToolButton
-        Left = 1
-        Top = 2
-        Action = SheetNew
-        OnMouseMove = hintMouseMove
-      end
-      object tbDeleteSheet: TToolButton
-        Left = 73
-        Top = 2
-        Action = SheetDelete
-        OnMouseMove = hintMouseMove
-      end
-      object tbEditSheet: TToolButton
-        Left = 145
-        Top = 2
-        Action = SheetEdit
-        OnMouseMove = hintMouseMove
-      end
     end
     object tcSheets: TTabControl
       Left = 1
       Height = 38
-      Top = 411
+      Top = 409
       Width = 697
       OnChange = tcSheetsChange
       Align = alBottom
+      TabOrder = 0
+    end
+    object Panel1: TPanel
+      Left = 1
+      Height = 46
+      Top = 447
+      Width = 697
+      Align = alBottom
+      AutoSize = True
+      ClientHeight = 46
+      ClientWidth = 697
       TabOrder = 1
+      object ToolBar3: TToolBar
+        Left = 1
+        Height = 44
+        Top = 1
+        Width = 401
+        Align = alClient
+        ButtonHeight = 42
+        ButtonWidth = 70
+        Caption = 'ToolBar3'
+        Images = smallIcons
+        ShowCaptions = True
+        TabOrder = 0
+        object tbNewSheet: TToolButton
+          Left = 1
+          Top = 2
+          Action = SheetNew
+          OnMouseMove = hintMouseMove
+        end
+        object tbDeleteSheet: TToolButton
+          Left = 71
+          Top = 2
+          Action = SheetDelete
+          OnMouseMove = hintMouseMove
+        end
+        object tbEditSheet: TToolButton
+          Left = 141
+          Top = 2
+          Action = SheetEdit
+          OnMouseMove = hintMouseMove
+        end
+      end
+      object tbZoom: TTrackBar
+        Left = 452
+        Height = 44
+        Hint = 'Adjust the zoom level of the image'
+        Top = 1
+        Width = 244
+        Frequency = 10
+        Max = 200
+        Min = 1
+        OnChange = tbZoomChange
+        Position = 100
+        TickStyle = tsManual
+        Align = alRight
+        OnMouseMove = hintMouseMove
+        TabOrder = 1
+      end
+      object lblZoom: TLabel
+        Left = 402
+        Height = 44
+        Top = 1
+        Width = 50
+        Align = alRight
+        AutoSize = False
+        Caption = 'Zoom: 100%'
+        ParentColor = False
+        WordWrap = True
+      end
     end
   end
   object sbToolbox: TScrollBox
@@ -950,6 +990,8 @@ object frmMain: TfrmMain
     object FileSaveAs1: TFileSaveAs
       Category = 'File'
       Caption = 'Save &As ...'
+      Dialog.DefaultExt = '.dcdx'
+      Dialog.Filter = 'DaveCAD Drawing XML files|*.dcdx'
       Hint = 'Save the currently open DaveCAD file under a specified name'
       ImageIndex = 5
       OnAccept = FileSaveAs1Accept
