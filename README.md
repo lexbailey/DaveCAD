@@ -10,5 +10,6 @@ To compile:
 
  - clone the repo, obviously.
  - get Lazarus if you don't already have it. http://lazarus.freepascal.org/
+ - You may need to make sure you have windres if you are not using windows: http://wiki.freepascal.org/Lazarus_Resources#Checking_you_have_windres
  - open the project in lazarus and click Run, Compile or Build, depending on your current mood. :D
  - Enjoy! (Optional)
