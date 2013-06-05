@@ -97,6 +97,7 @@
         <Filename Value="davecad_enum.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="davecad_enum"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
@@ -169,7 +170,7 @@
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="davecad_main.pas"/>
         <Caret Line="273" Column="26" TopLine="248"/>
