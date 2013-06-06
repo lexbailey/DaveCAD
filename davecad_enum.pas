@@ -41,6 +41,8 @@ const
   RENDER_TOOL_FELT_TIP = 'felt-tip';
   RENDER_TOOL_PENCIL = 'pencil';
 
+  FIXED_FONT = 12; //DO NOT EVER CHANGE THIS!
+
 implementation
 
 function getDrawTool(tool: string):integer;

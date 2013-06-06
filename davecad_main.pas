@@ -121,7 +121,6 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure pbDrawingClick(Sender: TObject);
     procedure pbDrawingMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure pbDrawingMouseLeave(Sender: TObject);
@@ -316,17 +315,6 @@ begin
    freeRenderer;
 end;
 
-procedure TfrmMain.pbDrawingClick(Sender: TObject);
-begin
-  if canEdit then begin
-    case edittingTool of
-      EDIT_TOOL_TEXT begin
-        //TODO text!
-      end;
-    end;
-  end;
-end;
-
 function TfrmMain.canEdit:boolean;
 var sheets: TDaveCADSheetList;
   sheet: TDaveCADSheet;
@@ -355,6 +343,9 @@ begin
     mouseIsDown := true;
     firstX := X;
     firstY := Y;
+    case edittingTool of
+       EDIT_TOOL_TEXT: doTool:=true;
+    end;
   end;
 end;
 
@@ -373,18 +364,19 @@ begin
   Status.Panels[0].Text := ''; //clear the hint from the status bar
   if mouseIsDown then begin
     case edittingTool of
-      EDIT_TOOL_LINE: begin //draw freehand
+      EDIT_TOOL_LINE: begin //draw line
         doTool := true;
         if assigned(tempObj) then begin
           tempObj.Free;
           tempObj := nil;
         end;
-        origin := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+
 
         sheets := loadedFile.getSheets;
 
         sheet := TDaveCADSheet.create;
         sheet.assign(sheets.sheet[loadedFile.Session.SelectedSheet]);
+        origin := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
         sheets.Free;
 
         tempObj := TDaveCADObject.Create;
@@ -397,7 +389,7 @@ begin
 
         sheet.free;
       end;
-      EDIT_TOOL_DRAWFREE: begin
+      EDIT_TOOL_DRAWFREE: begin //draw freehand
         sheet := TDaveCADSheet.create;
         sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
         loadedFile.addObject('line', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale));
@@ -406,6 +398,7 @@ begin
         sheet.Free;
         pbDrawing.Invalidate;
       end;
+
     end;
   end;
 end;
@@ -420,6 +413,13 @@ begin
         sheet := TDaveCADSheet.create;
         sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
         loadedFile.addObject('line', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale));
+        sheet.Free;
+        end;
+
+      EDIT_TOOL_TEXT: begin
+        sheet := TDaveCADSheet.create;
+        sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
+        loadedFile.addObject('text', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), X, Y, 0, 0, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale), 'test');
         sheet.Free;
       end;
     end;

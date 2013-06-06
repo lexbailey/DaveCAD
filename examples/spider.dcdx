@@ -17,6 +17,7 @@
 <!ATTLIST object left CDATA #REQUIRED>
 <!ATTLIST object top1 CDATA #IMPLIED>
 <!ATTLIST object left1 CDATA #IMPLIED>
+<!ATTLIST object text CDATA #IMPLIED>
 ]>
 <DaveCADDrawing file-version="0.1">
   <sheet>

@@ -19,15 +19,17 @@ type
   //Class for loading information about an object from a TDaveCADFile.getDOM
   TDaveCADObject = class (TObject)
     private
-      fObjName: string; //retrieved from the the XML text node, this identifies the object
+      fObjName: string; //retrieved from the the XML text node, this identifies the object type
       fP1, fP2: TPoint; //these are the points related to the object, usually on the origin (fP1) is used, fP2 is used in (for example) lines.
       fTool: integer;
       fColour: integer;
+      fText : string;
     public
 
       procedure loadFrom(dcObject: TDOMElement);
 
-       property Name: string read fObjName write fObjName;
+      property Name: string read fObjName write fObjName;
+      property Text: string read fText write fText;
       property Origin: TPoint read fP1 write fp1;
       property point1: TPoint read fP1 write fp1; //alias for origin for using where it makes more sense
       property point2: TPoint read fP2 write fp2;
@@ -278,6 +280,8 @@ implementation
 
     fTool:=getDrawTool(dcObject.GetAttribute('tool'));
     fColour:=getColour(dcObject.GetAttribute('colour'));
+    if dcObject.hasAttribute('text') then
+      fText:=dcObject.GetAttribute('text');
   end;
 
 end.

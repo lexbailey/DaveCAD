@@ -77,6 +77,7 @@ end;
 
 procedure renderObject(obj: TDaveCADObject; canvas: TCanvas; startX, startY: integer; scale: double; translation: TPoint);
 var pen: TPen;
+  x1, y1, x2, y2: integer;
 begin
   //tool dependant pen options
   pen := TPen.Create;
@@ -96,9 +97,21 @@ begin
   //init pen
   canvas.Pen := pen;
 
+  x1 := round(obj.point1X*scale)+startX;
+  y1 := round(obj.point1Y*scale)+startY;
+
+  x2 := round(obj.point2X*scale)+startX;
+  y2 := round(obj.point2Y*scale)+startY;
+
   if obj.Name = 'line' then begin
-    canvas.MoveTo(round(obj.point1X*scale)+startX, round(obj.point1Y*scale)+startY);
-    canvas.LineTo(round(obj.point2X*scale)+startX, round(obj.point2Y*scale)+startY);
+    canvas.MoveTo(x1, y1);
+    canvas.LineTo(x2, y2);
+  end;
+
+  if obj.Name = 'text' then begin
+    canvas.Font.Size:=round(FIXED_FONT*scale);
+    canvas.Brush.Style:= bsClear; ;
+    canvas.TextOut(x1, y1, obj.Text);
   end;
 
   pen.Free;
@@ -122,13 +135,12 @@ begin
 
   //blah blah etc...
   if (sheet.Media = RENDER_MEDIA_POST_IT) or (sheet.Media = RENDER_MEDIA_NOTEBOOK_A4) then begin
-    picture := TPicture.Create;
-    picture.LoadFromLazarusResource(sheet.Media);
+    if sheet.Media = RENDER_MEDIA_POST_IT then picture := postitPic;
+    if sheet.Media = RENDER_MEDIA_NOTEBOOK_A4 then picture := notepadA4Pic;
     picWidth := round(picture.Width*scale);
     picHeight := round(picture.Height*scale);
     startX := centreX-round(picWidth/2);
     startY := centreY-round(picHeight/2);
-    picture.Free;
   end;
   result := point(startX, startY);
 end;

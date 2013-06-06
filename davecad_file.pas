@@ -71,6 +71,7 @@ uses
         procedure updateSheetProps(sheet: TDOMElement; newname, newAuthor, newDate, newMedia: string);
 
         procedure addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer; origin: TPoint);
+        procedure addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer; origin: TPoint; text: string); overload;
         //function deleteObject(sheetName: string; objectID: integer): integer;
         //procedure updateObjectProps(sheet: string; objectID: integer; new...: string);
 
@@ -285,6 +286,14 @@ procedure TDaveCadFile.addObject(objType, sheetName, tool, colour: string; origi
 var sheet, dcObject, objects: TDOMElement;
   objectsnode: TDOMNode;
 begin
+  addObject(objType, sheetName, tool, colour, originX, originY, lastX, lastY, origin, '');
+end;
+
+//This function adds a sheet to the currently loaded file.
+procedure TDaveCadFile.addObject(objType, sheetName, tool, colour: string; originX, originY, lastX, lastY: integer; origin: TPoint; text: string);
+var sheet, dcObject, objects: TDOMElement;
+  objectsnode: TDOMNode;
+begin
   //find the sheet
   sheet := TDOMElement(getSheet(sheetName));
     dcObject := fFile.CreateElement('object');
@@ -294,6 +303,7 @@ begin
     dcObject.SetAttribute('left', inttostr(round((originX-origin.x)/session.scale)));
     dcObject.SetAttribute('top1', inttostr(round((lastY-origin.y)/session.scale)));
     dcObject.SetAttribute('left1', inttostr(round((lastX-origin.x)/session.scale)));
+    if text <> '' then dcObject.SetAttribute('text', text);
 
     dcObject.AppendChild(fFile.CreateTextNode(objType));
 
