@@ -110,7 +110,8 @@ begin
 
   if obj.Name = 'text' then begin
     canvas.Font.Size:=round(FIXED_FONT*scale);
-    canvas.Brush.Style:= bsClear; ;
+    canvas.Font.Color:=getTColor(obj.colour);
+    canvas.Brush.Style:= bsClear;
     canvas.TextOut(x1, y1, obj.Text);
   end;
 

@@ -299,6 +299,8 @@ begin
   drawingTool := 0;
   edittingTool := 0;
 
+  pbDrawing.canvas.Brush.Style:= bsClear;
+
   initRenderer;
 end;
 
@@ -357,7 +359,7 @@ end;
 
 procedure TfrmMain.pbDrawingMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
-var origin: TPoint;
+var //origin: TPoint;
   sheet: TDaveCADSheet;
   sheets: TDaveCADSheetList;
 begin
@@ -376,13 +378,17 @@ begin
 
         sheet := TDaveCADSheet.create;
         sheet.assign(sheets.sheet[loadedFile.Session.SelectedSheet]);
-        origin := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+        //origin := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
         sheets.Free;
+
 
         tempObj := TDaveCADObject.Create;
         tempObj.Name:='line';
-        tempObj.point1 := point(round((firstX-origin.x)/loadedFile.Session.scale), round((firstY-origin.y)/loadedFile.Session.scale));
-        tempObj.point2 := point(round((X-origin.x)/loadedFile.Session.scale), round((Y-origin.x)/loadedFile.Session.scale));
+//        tempObj.point1 := point(round((firstX-origin.x)/loadedFile.Session.scale), round((firstY-origin.y)/loadedFile.Session.scale));
+//        tempObj.point2 := point(round((X-origin.x)/loadedFile.Session.scale), round((Y-origin.y)/loadedFile.Session.scale));
+
+        tempObj.point1 := point(round((firstX)/loadedFile.Session.scale), round((firstY)/loadedFile.Session.scale));
+        tempObj.point2 := point(round((X)/loadedFile.Session.scale), round((Y)/loadedFile.Session.scale));
         tempObj.colour:=selectedColour;
         tempObj.tool:=drawingTool;
         pbDrawing.Invalidate;
@@ -398,7 +404,24 @@ begin
         sheet.Free;
         pbDrawing.Invalidate;
       end;
+    end;
+  end;
+  case edittingTool of
+    EDIT_TOOL_MOVE: begin
 
+    end;
+    EDIT_TOOL_TEXT: begin
+      if assigned(tempObj) then begin
+        tempObj.Free;
+        tempObj := nil;
+      end;
+      tempObj := TDaveCADObject.Create;
+      tempObj.Name:='text';
+      tempObj.point1 := point(round((firstX)/loadedFile.Session.scale), round((firstY)/loadedFile.Session.scale));
+      tempObj.colour:=selectedColour;
+      tempObj.tool:=drawingTool;
+      tempObj.Text:='test';
+      pbDrawing.Invalidate;
     end;
   end;
 end;
