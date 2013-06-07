@@ -151,13 +151,13 @@ end;
 
 function getTextWidth(obj: TDaveCADObject; canvas: TCanvas; scale: double): integer;
 begin
-  canvas.Font.Size:=round(FIXED_FONT*scale);
+  canvas.Font.Size:=round(FIXED_FONT);
   result := canvas.TextWidth(obj.Text);
 end;
 
 function getTextHeight(obj: TDaveCADObject; canvas: TCanvas; scale: double): integer;
 begin
-  canvas.Font.Size:=round(FIXED_FONT*scale);
+  canvas.Font.Size:=round(FIXED_FONT);
   result := canvas.TextHeight(obj.Text);
 end;
 

@@ -364,6 +364,7 @@ var //origin: TPoint;
   sheets: TDaveCADSheetList;
   i: integer;
   cursorPos : TPoint;
+  tWidth, tHeight: integer;
 begin
   Status.Panels[0].Text := ''; //clear the hint from the status bar
   if mouseIsDown then begin
@@ -406,20 +407,24 @@ begin
 
         sheet := TDaveCADSheet.create;
         sheet.loadWithObjectFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
+        if assigned(tempObj) then begin
+          tempObj.Free;
+          tempObj := nil;
+          pbDrawing.Invalidate;
+        end;
         for i:= 0 to sheet.objectCount-1 do begin
           with sheet.objects[i] do begin
             if Name = OBJECT_TEXT then begin
 
               cursorPos := cursorToDrawingPoint(X, Y, sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
 
-              //if (originX <= round((X)/loadedFile.Session.scale))
-              //and (originY <= round((Y)/loadedFile.Session.scale))
-              //and ((getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale)+originX) >= round((X)/loadedFile.Session.scale))
-              //and ((getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale)+originY) >= round((Y)/loadedFile.Session.scale))
+              tWidth := getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale);
+              tHeight := getTextHeight(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale);
+
               if (originX <= cursorPos.x)
               and (originY <= cursorPos.y)
-              and ((getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale)+originX) >= cursorPos.x)
-              and ((getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale)+originY) >= cursorPos.y)
+              and ((tWidth+originX) >= cursorPos.x)
+              and ((tHeight+originY) >= cursorPos.y)
               then begin
                 if assigned(tempObj) then begin
                   tempObj.Free;
@@ -427,11 +432,11 @@ begin
                 end;
                 tempObj := TDaveCADObject.Create;
                 tempObj.Name:=OBJECT_LINE;
-                tempObj.point1 := cursorToDrawingPoint(X, Y, sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
-//                tempObj.point2 := cursorToDrawingPoint(X, Y, sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
-//                tempObj.point2.y := tempObj.point2.y + 20;
-//                tempObj.point1 := point(round((originX)/loadedFile.Session.scale), round((originY+12)/loadedFile.Session.scale));
-//                tempObj.point2 := point(round((originX+20)/loadedFile.Session.scale), round((originY+12)/loadedFile.Session.scale));
+                tempObj.point1 := point1;
+                tempObj.point2 := point1;
+                tempObj.point1Y := tempObj.point1Y + tHeight;
+                tempObj.point2Y := tempObj.point2Y + tHeight;
+                tempObj.point2X := tempObj.point2X + tWidth;
                 tempObj.colour:=COLOUR_BLACK;
                 tempObj.tool:=DRAW_TOOL_BALLPOINT;
                 pbDrawing.Invalidate;
