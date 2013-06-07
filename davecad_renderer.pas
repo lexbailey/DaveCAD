@@ -12,6 +12,9 @@ procedure freeRenderer;
 procedure renderSheet(sheet: TDaveCADSheet; canvas: TCanvas; cwidth, cheight: integer; scale: double; translation : TPoint);
 procedure renderObject(obj: TDaveCADObject; canvas: TCanvas; startX, startY: integer; scale: double; translation : TPoint);
 function getOrigin(sheet: TDaveCADSheet; cwidth, cheight: integer; scale: double): TPoint;
+function getTextWidth(obj: TDaveCADObject; canvas: TCanvas; scale: double): integer;
+function getTextHeight(obj: TDaveCADObject; canvas: TCanvas; scale: double): integer;
+function cursorToDrawingPoint(curX, curY: integer; sheet: TDaveCADSheet; cwidth, cheight: integer; scale: double): TPoint;
 
 var
   postitPic, notepadA4Pic : TPicture;
@@ -103,12 +106,12 @@ begin
   x2 := round(obj.point2X*scale)+startX;
   y2 := round(obj.point2Y*scale)+startY;
 
-  if obj.Name = 'line' then begin
+  if obj.Name = OBJECT_LINE then begin
     canvas.MoveTo(x1, y1);
     canvas.LineTo(x2, y2);
   end;
 
-  if obj.Name = 'text' then begin
+  if obj.Name = OBJECT_TEXT then begin
     canvas.Font.Size:=round(FIXED_FONT*scale);
     canvas.Font.Color:=getTColor(obj.colour);
     canvas.Brush.Style:= bsClear;
@@ -144,6 +147,26 @@ begin
     startY := centreY-round(picHeight/2);
   end;
   result := point(startX, startY);
+end;
+
+function getTextWidth(obj: TDaveCADObject; canvas: TCanvas; scale: double): integer;
+begin
+  canvas.Font.Size:=round(FIXED_FONT*scale);
+  result := canvas.TextWidth(obj.Text);
+end;
+
+function getTextHeight(obj: TDaveCADObject; canvas: TCanvas; scale: double): integer;
+begin
+  canvas.Font.Size:=round(FIXED_FONT*scale);
+  result := canvas.TextHeight(obj.Text);
+end;
+
+function cursorToDrawingPoint(curX, curY: integer; sheet: TDaveCADSheet; cwidth, cheight: integer; scale: double): TPoint;
+var origin: TPoint;
+begin
+  origin := getOrigin(sheet, cwidth, cheight, scale);
+  result.x:= round((curX-origin.x)/scale);
+  result.y:= round((curY-origin.y)/scale);
 end;
 
 initialization

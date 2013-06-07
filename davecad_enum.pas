@@ -41,6 +41,9 @@ const
   RENDER_TOOL_FELT_TIP = 'felt-tip';
   RENDER_TOOL_PENCIL = 'pencil';
 
+  OBJECT_LINE = 'line';
+  OBJECT_TEXT = 'text';
+
   FIXED_FONT = 12; //DO NOT EVER CHANGE THIS!
 
 implementation

@@ -362,6 +362,8 @@ procedure TfrmMain.pbDrawingMouseMove(Sender: TObject; Shift: TShiftState; X,
 var //origin: TPoint;
   sheet: TDaveCADSheet;
   sheets: TDaveCADSheetList;
+  i: integer;
+  cursorPos : TPoint;
 begin
   Status.Panels[0].Text := ''; //clear the hint from the status bar
   if mouseIsDown then begin
@@ -372,33 +374,25 @@ begin
           tempObj.Free;
           tempObj := nil;
         end;
-
-
         sheets := loadedFile.getSheets;
-
         sheet := TDaveCADSheet.create;
         sheet.assign(sheets.sheet[loadedFile.Session.SelectedSheet]);
-        //origin := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
         sheets.Free;
-
-
         tempObj := TDaveCADObject.Create;
-        tempObj.Name:='line';
-//        tempObj.point1 := point(round((firstX-origin.x)/loadedFile.Session.scale), round((firstY-origin.y)/loadedFile.Session.scale));
-//        tempObj.point2 := point(round((X-origin.x)/loadedFile.Session.scale), round((Y-origin.y)/loadedFile.Session.scale));
+        tempObj.Name:=OBJECT_LINE;
 
-        tempObj.point1 := point(round((firstX)/loadedFile.Session.scale), round((firstY)/loadedFile.Session.scale));
-        tempObj.point2 := point(round((X)/loadedFile.Session.scale), round((Y)/loadedFile.Session.scale));
+        tempObj.point1 := cursorToDrawingPoint(firstX, firstY, sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+        tempObj.point2 := cursorToDrawingPoint(X, Y, sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+
         tempObj.colour:=selectedColour;
         tempObj.tool:=drawingTool;
         pbDrawing.Invalidate;
-
         sheet.free;
       end;
       EDIT_TOOL_DRAWFREE: begin //draw freehand
         sheet := TDaveCADSheet.create;
         sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
-        loadedFile.addObject('line', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale));
+        loadedFile.addObject(OBJECT_LINE, loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale));
         firstX := X;
         firstY := Y;
         sheet.Free;
@@ -408,7 +402,51 @@ begin
   end;
   case edittingTool of
     EDIT_TOOL_MOVE: begin
+      if canEdit then begin
 
+        sheet := TDaveCADSheet.create;
+        sheet.loadWithObjectFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
+        for i:= 0 to sheet.objectCount-1 do begin
+          with sheet.objects[i] do begin
+            if Name = OBJECT_TEXT then begin
+
+              cursorPos := cursorToDrawingPoint(X, Y, sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+
+              //if (originX <= round((X)/loadedFile.Session.scale))
+              //and (originY <= round((Y)/loadedFile.Session.scale))
+              //and ((getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale)+originX) >= round((X)/loadedFile.Session.scale))
+              //and ((getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale)+originY) >= round((Y)/loadedFile.Session.scale))
+              if (originX <= cursorPos.x)
+              and (originY <= cursorPos.y)
+              and ((getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale)+originX) >= cursorPos.x)
+              and ((getTextWidth(sheet.objects[i], pbDrawing.Canvas, loadedFile.Session.scale)+originY) >= cursorPos.y)
+              then begin
+                if assigned(tempObj) then begin
+                  tempObj.Free;
+                  tempObj := nil;
+                end;
+                tempObj := TDaveCADObject.Create;
+                tempObj.Name:=OBJECT_LINE;
+                tempObj.point1 := cursorToDrawingPoint(X, Y, sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+//                tempObj.point2 := cursorToDrawingPoint(X, Y, sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+//                tempObj.point2.y := tempObj.point2.y + 20;
+//                tempObj.point1 := point(round((originX)/loadedFile.Session.scale), round((originY+12)/loadedFile.Session.scale));
+//                tempObj.point2 := point(round((originX+20)/loadedFile.Session.scale), round((originY+12)/loadedFile.Session.scale));
+                tempObj.colour:=COLOUR_BLACK;
+                tempObj.tool:=DRAW_TOOL_BALLPOINT;
+                pbDrawing.Invalidate;
+              end;
+            end else
+            begin
+              if Name = OBJECT_LINE then begin
+
+              end;
+            end;
+
+          end;
+        end;
+        sheet.Free;
+      end;
     end;
     EDIT_TOOL_TEXT: begin
       if assigned(tempObj) then begin
@@ -416,7 +454,7 @@ begin
         tempObj := nil;
       end;
       tempObj := TDaveCADObject.Create;
-      tempObj.Name:='text';
+      tempObj.Name:=OBJECT_TEXT;
       tempObj.point1 := point(round((firstX)/loadedFile.Session.scale), round((firstY)/loadedFile.Session.scale));
       tempObj.colour:=selectedColour;
       tempObj.tool:=drawingTool;
@@ -435,14 +473,14 @@ begin
       EDIT_TOOL_LINE: begin //draw freehand
         sheet := TDaveCADSheet.create;
         sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
-        loadedFile.addObject('line', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale));
+        loadedFile.addObject(OBJECT_LINE, loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), firstX, firstY, X, Y, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale));
         sheet.Free;
         end;
 
       EDIT_TOOL_TEXT: begin
         sheet := TDaveCADSheet.create;
         sheet.loadFrom(TDOMElement(loadedFile.getSheet(loadedFile.Session.SelectedSheet)));
-        loadedFile.addObject('text', loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), X, Y, 0, 0, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale), 'test');
+        loadedFile.addObject(OBJECT_TEXT, loadedFile.Session.SelectedSheet, drawToolName(drawingTool), colourName(selectedColour), X, Y, 0, 0, getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale), 'test');
         sheet.Free;
       end;
     end;
@@ -488,7 +526,7 @@ procedure TfrmMain.pbDrawingPaint(Sender: TObject);
 var sheets: TDaveCADSheetList;
   sheet: TDaveCADSheet;
   tLastSheet: integer;
- // startPoint : TPoint;
+  startPoint : TPoint;
 begin
   //Decide what to draw!
   case fileState of
@@ -521,8 +559,8 @@ begin
         sheet.loadWithObjectFrom(TDOMElement(loadedFile.getDOM.DocumentElement.ChildNodes.Item[tLastSheet]));
         renderSheet(sheet, pbDrawing.Canvas, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale, point(loadedFile.Session.translateX, loadedFile.Session.translateY));
         if assigned(tempObj) then begin
-          //startPoint := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
-          renderObject(tempObj, pbDrawing.Canvas, 0,0, loadedFile.Session.scale, point(loadedFile.Session.translateX, loadedFile.Session.translateY));
+          startPoint := getOrigin(sheet, pbDrawing.Width, pbDrawing.Height, loadedFile.Session.scale);
+          renderObject(tempObj, pbDrawing.Canvas, startPoint.x,startPoint.y, loadedFile.Session.scale, point(loadedFile.Session.translateX, loadedFile.Session.translateY));
           tempObj.Free;
           tempObj := nil;
         end;
